@@ -51,7 +51,7 @@
     box-shadow:0 20px 50px rgba(43,33,64,0.35);
   }
   .cat-wrap{
-    width:190px; height:190px;
+    width:270px; height:170px;
     margin:0 auto 8px;
     position:relative;
     cursor:pointer;
@@ -146,6 +146,14 @@
     75%{ transform: scale(1.15); opacity:1; }
     90%{ transform: scale(1); opacity:1; }
   }
+  .heart{
+    animation: floatheart 2.6s ease-in-out infinite;
+    transform-origin: center;
+  }
+  @keyframes floatheart{
+    0%,100%{ transform: translateY(0) scale(0.85); opacity:.55; }
+    50%{ transform: translateY(-8px) scale(1); opacity:1; }
+  }
 
   @media (prefers-reduced-motion: reduce){
     .paw, .tail, .blossom, .petal{ animation: none !important; }
@@ -193,14 +201,14 @@
   <button class="music-btn" id="musicBtn" aria-label="Play music">🎵</button>
   <div class="music-hint" id="musicHint">tap the cat 🐾</div>
 
-  <!-- Optional: to use a real song instead of the built-in melody,
-       add an mp3 file named "song.mp3" next to this index.html
-       (from a royalty-free source) and uncomment the line below. -->
-  <audio id="songFile" src="song.mp3" loop></audio> 
+  <!-- song.mp3 lives next to this index.html -->
+  <audio id="songFile" src="song.mp3" loop></audio>
 
   <div class="card">
     <div class="cat-wrap" id="catWrap" role="button" aria-label="Tap the cat to play music">
-      <svg viewBox="0 0 200 200" width="100%" height="100%" aria-label="A cartoon cat tossing flower petals">
+      <svg viewBox="0 0 330 200" width="100%" height="100%" aria-label="Two cartoon cats, one giving the other a bouquet of flowers">
+        <!-- ===== Cat A: the giver, holding the bouquet ===== -->
+        <g>
         <!-- tail -->
         <path class="tail" d="M45 150 C 15 150, 10 110, 35 95" stroke="#fffdfa" stroke-width="10" fill="none" stroke-linecap="round"/>
         <path class="tail" d="M45 150 C 15 150, 10 110, 35 95" stroke="#d8cfc0" stroke-width="10" fill="none" stroke-linecap="round" opacity="0.35" style="mix-blend-mode:multiply"/>
@@ -213,8 +221,6 @@
         <path d="M138 68 L146 32 L108 60 Z" fill="#fffdfa"/>
         <path d="M66 62 L61 42 L84 58 Z" fill="#ff9eb0"/>
         <path d="M134 62 L139 42 L116 58 Z" fill="#ff9eb0"/>
-        <!-- face stripes -->
-        <path d="M100 60 L100 130" stroke="#4a3b63" stroke-width="0" fill="none"/>
         <!-- cheeks blush -->
         <ellipse cx="76" cy="104" rx="9" ry="6" fill="#ff9eb0" opacity="0.6"/>
         <ellipse cx="124" cy="104" rx="9" ry="6" fill="#ff9eb0" opacity="0.6"/>
@@ -231,7 +237,7 @@
         <path d="M140 100 L170 96" stroke="#2c2140" stroke-width="2" opacity="0.6"/>
         <path d="M140 108 L170 110" stroke="#2c2140" stroke-width="2" opacity="0.6"/>
 
-        <!-- static paw holding stems -->
+        <!-- static paw -->
         <ellipse cx="70" cy="168" rx="12" ry="9" fill="#f7f3ee" stroke="#e2d8c8" stroke-width="1.5"/>
 
         <!-- tossing paw with bouquet -->
@@ -291,10 +297,102 @@
             <circle cx="112" cy="105" r="4" fill="#fff3d6"/>
           </g>
         </g>
+        </g>
+
+        <!-- ===== Cat B: dark-coated, also holding a bouquet ===== -->
+        <g transform="translate(330,0) scale(-1,1)">
+          <!-- tail -->
+          <path class="tail" d="M45 150 C 15 150, 10 110, 35 95" stroke="#2b2632" stroke-width="10" fill="none" stroke-linecap="round"/>
+          <!-- body -->
+          <ellipse cx="100" cy="150" rx="52" ry="34" fill="#211d27" stroke="#3d3742" stroke-width="1.5"/>
+          <!-- head -->
+          <circle cx="100" cy="95" r="46" fill="#26212d" stroke="#3d3742" stroke-width="1.5"/>
+          <!-- ears -->
+          <path d="M62 68 L54 32 L92 60 Z" fill="#26212d"/>
+          <path d="M138 68 L146 32 L108 60 Z" fill="#26212d"/>
+          <path d="M66 62 L61 42 L84 58 Z" fill="#ff9eb0"/>
+          <path d="M134 62 L139 42 L116 58 Z" fill="#ff9eb0"/>
+          <!-- cheeks blush -->
+          <ellipse cx="76" cy="104" rx="9" ry="6" fill="#ff9eb0" opacity="0.5"/>
+          <ellipse cx="124" cy="104" rx="9" ry="6" fill="#ff9eb0" opacity="0.5"/>
+          <!-- happy eyes, light so they read against dark fur -->
+          <path d="M76 90 Q84 80 92 90" stroke="#fff3d6" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <path d="M108 90 Q116 80 124 90" stroke="#fff3d6" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <!-- nose + mouth -->
+          <path d="M96 104 L104 104 L100 110 Z" fill="#ff9eb0"/>
+          <path d="M100 110 Q100 116 92 116" stroke="#fff3d6" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path d="M100 110 Q100 116 108 116" stroke="#fff3d6" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <!-- whiskers -->
+          <path d="M60 100 L30 96" stroke="#fff3d6" stroke-width="2" opacity="0.6"/>
+          <path d="M60 108 L30 110" stroke="#fff3d6" stroke-width="2" opacity="0.6"/>
+          <path d="M140 100 L170 96" stroke="#fff3d6" stroke-width="2" opacity="0.6"/>
+          <path d="M140 108 L170 110" stroke="#fff3d6" stroke-width="2" opacity="0.6"/>
+
+          <!-- static paw -->
+          <ellipse cx="70" cy="168" rx="12" ry="9" fill="#211d27" stroke="#3d3742" stroke-width="1.5"/>
+
+          <!-- tossing paw with its own bouquet -->
+          <g class="paw">
+            <!-- paper wrap -->
+            <path d="M128 150 L152 150 L147 116 L133 116 Z" fill="#fef6ea" stroke="#e8ddc8" stroke-width="1.2"/>
+            <path d="M132 150 L140 118" stroke="#e8ddc8" stroke-width="1" opacity="0.6"/>
+            <path d="M148 150 L142 118" stroke="#e8ddc8" stroke-width="1" opacity="0.6"/>
+            <!-- ribbon -->
+            <path d="M140 146 L131 138 L140 141 Z" fill="#c98fb8"/>
+            <path d="M140 146 L149 138 L140 141 Z" fill="#c98fb8"/>
+            <circle cx="140" cy="144" r="3.4" fill="#b9587a"/>
+
+            <ellipse cx="140" cy="150" rx="13" ry="10" fill="#211d27" stroke="#3d3742" stroke-width="1.5"/>
+
+            <!-- stems -->
+            <path d="M140 148 L150 118" stroke="#8fae7f" stroke-width="3" fill="none"/>
+            <path d="M140 148 L138 112" stroke="#8fae7f" stroke-width="3" fill="none"/>
+            <path d="M140 148 L127 120" stroke="#8fae7f" stroke-width="3" fill="none"/>
+            <path d="M140 148 L162 124" stroke="#8fae7f" stroke-width="3" fill="none"/>
+            <path d="M140 148 L115 114" stroke="#8fae7f" stroke-width="3" fill="none"/>
+
+            <!-- leaves -->
+            <ellipse cx="146" cy="134" rx="6" ry="2.6" fill="#8fae7f" transform="rotate(-35 146 134)"/>
+            <ellipse cx="131" cy="132" rx="6" ry="2.6" fill="#8fae7f" transform="rotate(40 131 132)"/>
+            <ellipse cx="152" cy="140" rx="5" ry="2.2" fill="#8fae7f" transform="rotate(-10 152 140)"/>
+
+            <!-- blossoms -->
+            <g class="blossom" style="animation-delay:.1s">
+              <circle cx="150" cy="114" r="6" fill="#ffd9a0"/>
+              <circle cx="146" cy="108" r="6" fill="#e0607e"/>
+              <circle cx="156" cy="108" r="6" fill="#e0607e"/>
+              <circle cx="150" cy="108" r="5" fill="#fff3d6"/>
+            </g>
+            <g class="blossom" style="animation-delay:.3s">
+              <circle cx="138" cy="108" r="5.5" fill="#e0607e"/>
+              <circle cx="134" cy="102" r="5.5" fill="#c98fb8"/>
+              <circle cx="142" cy="102" r="5.5" fill="#c98fb8"/>
+              <circle cx="138" cy="102" r="4.5" fill="#fff3d6"/>
+            </g>
+            <g class="blossom" style="animation-delay:.5s">
+              <circle cx="124" cy="116" r="5" fill="#ffd9a0"/>
+              <circle cx="120" cy="111" r="5" fill="#e0607e"/>
+              <circle cx="128" cy="111" r="5" fill="#e0607e"/>
+              <circle cx="124" cy="111" r="4" fill="#fff3d6"/>
+            </g>
+            <g class="blossom" style="animation-delay:.7s">
+              <circle cx="163" cy="120" r="5" fill="#c98fb8"/>
+              <circle cx="159" cy="115" r="5" fill="#fff3d6"/>
+              <circle cx="167" cy="115" r="5" fill="#fff3d6"/>
+              <circle cx="163" cy="115" r="4" fill="#e0607e"/>
+            </g>
+            <g class="blossom" style="animation-delay:.9s">
+              <circle cx="112" cy="110" r="5" fill="#e0607e"/>
+              <circle cx="108" cy="105" r="5" fill="#ffd9a0"/>
+              <circle cx="116" cy="105" r="5" fill="#ffd9a0"/>
+              <circle cx="112" cy="105" r="4" fill="#fff3d6"/>
+            </g>
+          </g>
+        </g>
       </svg>
     </div>
 
-    <p class="sub"> Hey Riri, here's to my favorite CSR </p>
+    <p class="sub">Hey Riri, here's to my favorite CSR</p>
     <p class="greeting">Good luck with your shift!</p>
     <p class="signoff">you've got this 🌸</p>
   </div>
@@ -360,12 +458,14 @@
   }
 
   function setPlaying(playing){
+    if(playing === isPlaying) return; // ignore duplicate calls, prevents overlapping playback
     isPlaying = playing;
     btn.classList.toggle('playing', isPlaying);
     btn.textContent = isPlaying ? '⏸' : '🎵';
     hint.style.display = isPlaying ? 'none' : 'block';
 
     if(songFile){
+      stopSynthLoop(); // safety: make sure no stray synth notes are still scheduled
       if(isPlaying){ songFile.currentTime = 0; songFile.play(); }
       else { songFile.pause(); }
     } else {
