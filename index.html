@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Good Luck Today</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sky-top:#3d2f52;
+    --sky-bot:#f2b6c6;
+    --sun:#ffd9a0;
+    --card:#fff8f0;
+    --ink:#2b2140;
+    --petal:#ff9eb0;
+    --petal-2:#ffc17a;
+    --leaf:#8fae7f;
+  }
+  *{box-sizing:border-box;}
+  html,body{
+    margin:0; height:100%;
+    font-family:'Quicksand',sans-serif;
+    overflow:hidden;
+    background:linear-gradient(180deg, var(--sky-top) 0%, var(--sky-bot) 65%, #ffe3d0 100%);
+  }
+  .stage{
+    position:relative;
+    width:100%; height:100vh;
+    display:flex; align-items:center; justify-content:center;
+    padding:24px;
+  }
+  .sun{
+    position:absolute;
+    top:8%; left:50%; transform:translateX(-50%);
+    width:170px; height:170px;
+    border-radius:50%;
+    background:radial-gradient(circle at 35% 35%, #fff3d6, var(--sun) 70%);
+    box-shadow:0 0 60px 20px rgba(255,217,160,0.35);
+    opacity:.9;
+  }
+  .card{
+    position:relative;
+    z-index:3;
+    background:var(--card);
+    border-radius:28px;
+    padding:36px 28px 28px;
+    width:100%;
+    max-width:360px;
+    text-align:center;
+    box-shadow:0 20px 50px rgba(43,33,64,0.35);
+  }
+  .cat-wrap{
+    width:190px; height:190px;
+    margin:0 auto 8px;
+    position:relative;
+    cursor:pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .cat-wrap svg{
+    display:block;
+    transform-origin:center;
+  }
+  .cat-wrap.celebrate svg{
+    animation: bounce .6s ease;
+  }
+  @keyframes bounce{
+    0%{ transform:scale(1) rotate(0deg); }
+    30%{ transform:scale(1.14) rotate(-4deg); }
+    55%{ transform:scale(0.94) rotate(3deg); }
+    75%{ transform:scale(1.05) rotate(-1deg); }
+    100%{ transform:scale(1) rotate(0deg); }
+  }
+  .cat-wrap.celebrate .paw{
+    animation: toss .5s ease-in-out 2;
+  }
+  .greeting{
+    font-family:'Caveat',cursive;
+    font-weight:700;
+    font-size:2.6rem;
+    color:var(--ink);
+    margin:6px 0 2px;
+    line-height:1.05;
+  }
+  .sub{
+    font-size:0.95rem;
+    color:#7a6d8f;
+    margin:0 0 4px;
+    font-weight:500;
+    letter-spacing:.02em;
+  }
+  .signoff{
+    margin-top:14px;
+    font-family:'Caveat',cursive;
+    font-size:1.3rem;
+    color:#b9587a;
+  }
+
+  /* petals */
+  .petals{
+    position:absolute; inset:0;
+    pointer-events:none;
+    z-index:2;
+    overflow:hidden;
+  }
+  .petal{
+    position:absolute;
+    top:-40px;
+    border-radius:50% 0 50% 0;
+    opacity:.9;
+    animation-name:drift;
+    animation-timing-function:linear;
+    animation-iteration-count:infinite;
+  }
+  @keyframes drift{
+    0%{ transform:translateY(-10vh) translateX(0) rotate(0deg); opacity:0; }
+    10%{ opacity:.95; }
+    90%{ opacity:.9; }
+    100%{ transform:translateY(110vh) translateX(var(--drift, 40px)) rotate(340deg); opacity:0; }
+  }
+
+  /* cat paw toss */
+  .paw{
+    transform-origin: 78% 68%;
+    animation: toss 2.4s ease-in-out infinite;
+  }
+  @keyframes toss{
+    0%,100%{ transform: rotate(0deg); }
+    30%{ transform: rotate(-26deg); }
+    50%{ transform: rotate(4deg); }
+  }
+  .tail{
+    transform-origin: 20% 85%;
+    animation: sway 3.2s ease-in-out infinite;
+  }
+  @keyframes sway{
+    0%,100%{ transform: rotate(0deg); }
+    50%{ transform: rotate(8deg); }
+  }
+  .blossom{
+    animation: pop 2.4s ease-in-out infinite;
+    transform-origin: center;
+  }
+  @keyframes pop{
+    0%,60%,100%{ transform: scale(0); opacity:0; }
+    75%{ transform: scale(1.15); opacity:1; }
+    90%{ transform: scale(1); opacity:1; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .paw, .tail, .blossom, .petal{ animation: none !important; }
+  }
+
+  .music-btn{
+    position:absolute;
+    top:16px; right:16px;
+    z-index:4;
+    width:48px; height:48px;
+    border-radius:50%;
+    border:none;
+    background:var(--card);
+    color:var(--ink);
+    font-size:1.3rem;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 8px 18px rgba(43,33,64,0.3);
+    cursor:pointer;
+    animation: pulse 1.8s ease-in-out infinite;
+  }
+  .music-btn.playing{ animation:none; }
+  @keyframes pulse{
+    0%,100%{ transform:scale(1); }
+    50%{ transform:scale(1.08); }
+  }
+  .music-hint{
+    position:absolute;
+    top:68px; right:16px;
+    z-index:4;
+    font-size:.75rem;
+    color:#fff;
+    background:rgba(43,33,64,0.55);
+    padding:4px 9px;
+    border-radius:10px;
+    font-family:'Quicksand',sans-serif;
+  }
+</style>
+</head>
+<body>
+
+<div class="stage">
+  <div class="sun"></div>
+  <div class="petals" id="petals"></div>
+
+  <button class="music-btn" id="musicBtn" aria-label="Play music">🎵</button>
+  <div class="music-hint" id="musicHint">tap the cat 🐾</div>
+
+  <!-- Optional: to use a real song instead of the built-in melody,
+       add an mp3 file named "song.mp3" next to this index.html
+       (from a royalty-free source) and uncomment the line below. -->
+  <audio id="songFile" src="song.mp3" loop></audio> 
+
+  <div class="card">
+    <div class="cat-wrap" id="catWrap" role="button" aria-label="Tap the cat to play music">
+      <svg viewBox="0 0 200 200" width="100%" height="100%" aria-label="A cartoon cat tossing flower petals">
+        <!-- tail -->
+        <path class="tail" d="M45 150 C 15 150, 10 110, 35 95" stroke="#fffdfa" stroke-width="10" fill="none" stroke-linecap="round"/>
+        <path class="tail" d="M45 150 C 15 150, 10 110, 35 95" stroke="#d8cfc0" stroke-width="10" fill="none" stroke-linecap="round" opacity="0.35" style="mix-blend-mode:multiply"/>
+        <!-- body -->
+        <ellipse cx="100" cy="150" rx="52" ry="34" fill="#f7f3ee" stroke="#e2d8c8" stroke-width="1.5"/>
+        <!-- head -->
+        <circle cx="100" cy="95" r="46" fill="#fffdfa" stroke="#e2d8c8" stroke-width="1.5"/>
+        <!-- ears -->
+        <path d="M62 68 L54 32 L92 60 Z" fill="#fffdfa"/>
+        <path d="M138 68 L146 32 L108 60 Z" fill="#fffdfa"/>
+        <path d="M66 62 L61 42 L84 58 Z" fill="#ff9eb0"/>
+        <path d="M134 62 L139 42 L116 58 Z" fill="#ff9eb0"/>
+        <!-- face stripes -->
+        <path d="M100 60 L100 130" stroke="#4a3b63" stroke-width="0" fill="none"/>
+        <!-- cheeks blush -->
+        <ellipse cx="76" cy="104" rx="9" ry="6" fill="#ff9eb0" opacity="0.6"/>
+        <ellipse cx="124" cy="104" rx="9" ry="6" fill="#ff9eb0" opacity="0.6"/>
+        <!-- eyes -->
+        <path d="M78 92 Q84 84 90 92" stroke="#221936" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <path d="M110 92 Q116 84 122 92" stroke="#221936" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <!-- nose + mouth -->
+        <path d="M96 104 L104 104 L100 110 Z" fill="#221936"/>
+        <path d="M100 110 Q100 116 92 116" stroke="#221936" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M100 110 Q100 116 108 116" stroke="#221936" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <!-- whiskers -->
+        <path d="M60 100 L30 96" stroke="#2c2140" stroke-width="2" opacity="0.6"/>
+        <path d="M60 108 L30 110" stroke="#2c2140" stroke-width="2" opacity="0.6"/>
+        <path d="M140 100 L170 96" stroke="#2c2140" stroke-width="2" opacity="0.6"/>
+        <path d="M140 108 L170 110" stroke="#2c2140" stroke-width="2" opacity="0.6"/>
+
+        <!-- static paw holding stems -->
+        <ellipse cx="70" cy="168" rx="12" ry="9" fill="#f7f3ee" stroke="#e2d8c8" stroke-width="1.5"/>
+
+        <!-- tossing paw with bouquet -->
+        <g class="paw">
+          <!-- paper wrap -->
+          <path d="M128 150 L152 150 L147 116 L133 116 Z" fill="#fef6ea" stroke="#e8ddc8" stroke-width="1.2"/>
+          <path d="M132 150 L140 118" stroke="#e8ddc8" stroke-width="1" opacity="0.6"/>
+          <path d="M148 150 L142 118" stroke="#e8ddc8" stroke-width="1" opacity="0.6"/>
+          <!-- ribbon -->
+          <path d="M140 146 L131 138 L140 141 Z" fill="#c98fb8"/>
+          <path d="M140 146 L149 138 L140 141 Z" fill="#c98fb8"/>
+          <circle cx="140" cy="144" r="3.4" fill="#b9587a"/>
+
+          <ellipse cx="140" cy="150" rx="13" ry="10" fill="#f7f3ee" stroke="#e2d8c8" stroke-width="1.5"/>
+
+          <!-- stems -->
+          <path d="M140 148 L150 118" stroke="#8fae7f" stroke-width="3" fill="none"/>
+          <path d="M140 148 L138 112" stroke="#8fae7f" stroke-width="3" fill="none"/>
+          <path d="M140 148 L127 120" stroke="#8fae7f" stroke-width="3" fill="none"/>
+          <path d="M140 148 L162 124" stroke="#8fae7f" stroke-width="3" fill="none"/>
+          <path d="M140 148 L115 114" stroke="#8fae7f" stroke-width="3" fill="none"/>
+
+          <!-- leaves -->
+          <ellipse cx="146" cy="134" rx="6" ry="2.6" fill="#8fae7f" transform="rotate(-35 146 134)"/>
+          <ellipse cx="131" cy="132" rx="6" ry="2.6" fill="#8fae7f" transform="rotate(40 131 132)"/>
+          <ellipse cx="152" cy="140" rx="5" ry="2.2" fill="#8fae7f" transform="rotate(-10 152 140)"/>
+
+          <!-- blossoms -->
+          <g class="blossom" style="animation-delay:0s">
+            <circle cx="150" cy="114" r="6" fill="#ff9eb0"/>
+            <circle cx="146" cy="108" r="6" fill="#ffc17a"/>
+            <circle cx="156" cy="108" r="6" fill="#ffc17a"/>
+            <circle cx="150" cy="108" r="5" fill="#fff3d6"/>
+          </g>
+          <g class="blossom" style="animation-delay:.2s">
+            <circle cx="138" cy="108" r="5.5" fill="#ff9eb0"/>
+            <circle cx="134" cy="102" r="5.5" fill="#c98fb8"/>
+            <circle cx="142" cy="102" r="5.5" fill="#c98fb8"/>
+            <circle cx="138" cy="102" r="4.5" fill="#fff3d6"/>
+          </g>
+          <g class="blossom" style="animation-delay:.4s">
+            <circle cx="124" cy="116" r="5" fill="#ffc17a"/>
+            <circle cx="120" cy="111" r="5" fill="#ff9eb0"/>
+            <circle cx="128" cy="111" r="5" fill="#ff9eb0"/>
+            <circle cx="124" cy="111" r="4" fill="#fff3d6"/>
+          </g>
+          <g class="blossom" style="animation-delay:.6s">
+            <circle cx="163" cy="120" r="5" fill="#c98fb8"/>
+            <circle cx="159" cy="115" r="5" fill="#fff3d6"/>
+            <circle cx="167" cy="115" r="5" fill="#fff3d6"/>
+            <circle cx="163" cy="115" r="4" fill="#ff9eb0"/>
+          </g>
+          <g class="blossom" style="animation-delay:.8s">
+            <circle cx="112" cy="110" r="5" fill="#ff9eb0"/>
+            <circle cx="108" cy="105" r="5" fill="#ffc17a"/>
+            <circle cx="116" cy="105" r="5" fill="#ffc17a"/>
+            <circle cx="112" cy="105" r="4" fill="#fff3d6"/>
+          </g>
+        </g>
+      </svg>
+    </div>
+
+    <p class="sub"> Hey Riri, here's to my favorite CSR </p>
+    <p class="greeting">Good luck with your shift!</p>
+    <p class="signoff">you've got this 🌸</p>
+  </div>
+</div>
+
+<script>
+  const container = document.getElementById('petals');
+  const colors = ['#ff9eb0', '#ffc17a', '#fff3d6', '#c98fb8'];
+  const count = 22;
+  for(let i=0;i<count;i++){
+    const p = document.createElement('div');
+    p.className = 'petal';
+    const size = 8 + Math.random()*10;
+    p.style.width = size+'px';
+    p.style.height = size*0.8+'px';
+    p.style.left = Math.random()*100+'vw';
+    p.style.background = colors[Math.floor(Math.random()*colors.length)];
+    p.style.setProperty('--drift', (Math.random()*80-40)+'px');
+    p.style.animationDuration = (7+Math.random()*6)+'s';
+    p.style.animationDelay = (Math.random()*8)+'s';
+    container.appendChild(p);
+  }
+
+  // ---- Background music ----
+  const btn = document.getElementById('musicBtn');
+  const hint = document.getElementById('musicHint');
+  const catWrap = document.getElementById('catWrap');
+  const songFile = document.getElementById('songFile'); // present only if you added your own mp3
+
+  let audioCtx, isPlaying = false, loopTimer;
+
+  // A gentle looping pentatonic arpeggio, synthesized (no external file needed).
+  const notes = [523.25, 587.33, 659.25, 783.99, 880.00, 783.99, 659.25, 587.33]; // C5 D5 E5 G5 A5 G5 E5 D5
+  function playSynthLoop(){
+    if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if(audioCtx.state === 'suspended') audioCtx.resume();
+    let step = 0;
+    const noteLength = 0.42;
+
+    function scheduleNote(freq, time){
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, time);
+      gain.gain.setValueAtTime(0, time);
+      gain.gain.linearRampToValueAtTime(0.12, time + 0.05);
+      gain.gain.linearRampToValueAtTime(0, time + noteLength);
+      osc.connect(gain).connect(audioCtx.destination);
+      osc.start(time);
+      osc.stop(time + noteLength + 0.05);
+    }
+
+    function tick(){
+      const now = audioCtx.currentTime;
+      scheduleNote(notes[step % notes.length], now);
+      step++;
+      loopTimer = setTimeout(tick, noteLength * 1000);
+    }
+    tick();
+  }
+  function stopSynthLoop(){
+    clearTimeout(loopTimer);
+  }
+
+  function setPlaying(playing){
+    isPlaying = playing;
+    btn.classList.toggle('playing', isPlaying);
+    btn.textContent = isPlaying ? '⏸' : '🎵';
+    hint.style.display = isPlaying ? 'none' : 'block';
+
+    if(songFile){
+      if(isPlaying){ songFile.currentTime = 0; songFile.play(); }
+      else { songFile.pause(); }
+    } else {
+      if(isPlaying){ playSynthLoop(); } else { stopSynthLoop(); }
+    }
+  }
+
+  function toggleMusic(){
+    setPlaying(!isPlaying);
+  }
+
+  function burstPetals(){
+    const extra = 10;
+    for(let i=0;i<extra;i++){
+      const p = document.createElement('div');
+      p.className = 'petal';
+      const size = 8 + Math.random()*10;
+      p.style.width = size+'px';
+      p.style.height = size*0.8+'px';
+      p.style.left = (45 + Math.random()*10)+'vw';
+      p.style.top = '30vh';
+      p.style.background = colors[Math.floor(Math.random()*colors.length)];
+      p.style.setProperty('--drift', (Math.random()*160-80)+'px');
+      p.style.animationDuration = (2.5+Math.random()*2)+'s';
+      p.style.animationDelay = '0s';
+      container.appendChild(p);
+      setTimeout(() => p.remove(), 5000);
+    }
+  }
+
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleMusic();
+  });
+
+  catWrap.addEventListener('click', () => {
+    catWrap.classList.remove('celebrate');
+    void catWrap.offsetWidth; // restart animation
+    catWrap.classList.add('celebrate');
+    burstPetals();
+    if(!isPlaying) setPlaying(true);
+  });
+
+  catWrap.addEventListener('keydown', (e) => {
+    if(e.key === 'Enter' || e.key === ' '){
+      e.preventDefault();
+      catWrap.click();
+    }
+  });
+  catWrap.setAttribute('tabindex', '0');
+</script>
+
+</body>
+</html>
