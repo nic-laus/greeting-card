@@ -2,635 +2,956 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Good luck tonight 🌸</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>a question for riri 🐾</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --cream:#FFF7EE;
-    --cream-2:#FFEFE0;
-    --blush:#FBD4D9;
-    --blush-2:#F7BFC8;
-    --latte:#D9AE8B;
-    --latte-dark:#B9835C;
-    --ink:#5B4636;
-    --ink-soft:#8A6F5C;
-    --sakura:#F6A8C0;
-    --white:#FFFFFF;
-    --shadow: 0 12px 30px rgba(180,130,110,0.18);
-    --shadow-sm: 0 6px 16px rgba(180,130,110,0.14);
+    --cream:#FFF7EC;
+    --cream-deep:#FBEDDA;
+    --rose:#E7A9A0;
+    --rose-deep:#C97B72;
+    --sage:#8FA888;
+    --sage-deep:#71926A;
+    --ink:#3A2C30;
+    --paw:#D8B79A;
   }
-
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
-
   body{
-    font-family:'Quicksand', sans-serif;
-    background:
-      radial-gradient(circle at 15% 10%, #FFEFE1 0%, transparent 45%),
-      radial-gradient(circle at 85% 20%, #FDE2E8 0%, transparent 40%),
-      linear-gradient(180deg, var(--cream) 0%, var(--cream-2) 60%, #FCE8DE 100%);
-    color:var(--ink);
     min-height:100vh;
+    background:
+      radial-gradient(circle at 15% 20%, #FDEFE0 0%, transparent 45%),
+      radial-gradient(circle at 85% 80%, #F6DCD8 0%, transparent 50%),
+      var(--cream);
+    font-family:'Nunito', sans-serif;
+    color:var(--ink);
+    display:flex;
+    align-items:center;
+    justify-content:center;
     overflow-x:hidden;
     position:relative;
-    -webkit-font-smoothing:antialiased;
   }
 
-  @media (prefers-reduced-motion: reduce){
-    *, *::before, *::after{
-      animation-duration:0.01ms !important;
-      animation-iteration-count:1 !important;
-      transition-duration:0.01ms !important;
-    }
-  }
-
-  h1,h2,h3,.display{
-    font-family:'Baloo 2', cursive;
-    color:var(--ink);
-  }
-
-  /* ---------- floating particles layer ---------- */
-  #particle-layer{
+  /* floating ambient paw prints */
+  .paw-bg{
     position:fixed;
     inset:0;
     pointer-events:none;
-    overflow:hidden;
-    z-index:1;
+    z-index:0;
   }
-  .petal, .paw{
+  .paw-bg span{
     position:absolute;
-    top:-40px;
-    opacity:0.85;
-    will-change:transform;
-    animation-name:drift-fall;
-    animation-timing-function:linear;
-    animation-fill-mode:forwards;
+    font-size:22px;
+    opacity:0.16;
+    color:var(--rose-deep);
+    animation:drift 14s linear infinite;
   }
-  .petal{ font-size:20px; filter:drop-shadow(0 2px 4px rgba(0,0,0,0.05)); }
-  .paw{ font-size:16px; opacity:0.55; }
-
-  @keyframes drift-fall{
-    0%{ transform: translate(0,0) rotate(0deg); opacity:0; }
-    8%{ opacity:0.85; }
-    100%{ transform: translate(var(--drift,60px), 110vh) rotate(340deg); opacity:0; }
+  @keyframes drift{
+    0%{ transform:translateY(0) rotate(0deg); opacity:0.16;}
+    100%{ transform:translateY(-120vh) rotate(25deg); opacity:0;}
   }
 
-  /* ---------- layout ---------- */
-  .wrap{
+  .stage{
     position:relative;
-    z-index:2;
-    max-width:520px;
-    margin:0 auto;
-    padding:32px 20px 60px;
+    z-index:1;
+    width:min(480px, 92vw);
+    background:#fff;
+    border-radius:32px;
+    padding:36px 28px 32px;
+    box-shadow:0 20px 60px rgba(120, 80, 70, 0.18), 0 2px 8px rgba(120,80,70,0.08);
+    text-align:center;
+    border:2px solid var(--cream-deep);
   }
 
-  .card{
-    background:var(--white);
-    border-radius:28px;
-    box-shadow:var(--shadow);
-    padding:24px 22px;
-    margin-bottom:22px;
-    position:relative;
-    animation:card-in 0.7s cubic-bezier(.2,1.4,.4,1) both;
-  }
-  @keyframes card-in{
-    0%{ opacity:0; transform:translateY(18px) scale(0.97); }
-    100%{ opacity:1; transform:translateY(0) scale(1); }
+  h1.title{
+    font-family:'Fredoka', sans-serif;
+    font-size:1.5rem;
+    font-weight:600;
+    color:var(--rose-deep);
+    margin:4px 0 22px;
+    letter-spacing:0.2px;
   }
 
-  /* ---------- hero ---------- */
-  .hero{ text-align:center; padding-top:8px; }
-  .eyebrow{
-    display:inline-block;
-    font-size:13px;
-    letter-spacing:0.08em;
-    color:var(--latte-dark);
-    background:var(--blush);
-    padding:5px 14px;
-    border-radius:999px;
-    font-weight:700;
-    margin-bottom:14px;
-  }
-  .hero h1{
-    font-size:clamp(26px, 7vw, 34px);
-    line-height:1.25;
-    margin:0 0 10px;
-  }
-  .hero p{
-    font-size:15px;
-    color:var(--ink-soft);
-    margin:0 0 22px;
-    line-height:1.5;
-  }
-
-  /* ---------- cat mascot ---------- */
-  .cat-stage{
-    display:flex;
-    justify-content:center;
-    margin:6px 0 10px;
-    position:relative;
-  }
-  .cat-svg-wrap{
+  /* CAT */
+  .cat-wrap{
+    width:190px;
+    margin:0 auto 6px;
     cursor:pointer;
-    transition: transform 0.18s cubic-bezier(.3,1.6,.4,1);
-    -webkit-tap-highlight-color:transparent;
     user-select:none;
+    -webkit-tap-highlight-color:transparent;
   }
-  .cat-svg-wrap:hover{ transform:translateY(-3px); }
-  .cat-svg-wrap.bounce{ animation:cat-bounce 0.55s cubic-bezier(.3,1.8,.4,1); }
-  @keyframes cat-bounce{
-    0%{ transform:scale(1) translateY(0); }
-    30%{ transform:scale(0.94,1.08) translateY(-14px); }
-    55%{ transform:scale(1.05,0.95) translateY(2px); }
-    75%{ transform:scale(0.98,1.02) translateY(-4px); }
-    100%{ transform:scale(1) translateY(0); }
+  .cat-wrap svg{
+    width:100%;
+    display:block;
+    animation:breathe 3.2s ease-in-out infinite;
+    transform-origin:center bottom;
+  }
+  @keyframes breathe{
+    0%,100%{ transform:translateY(0) scale(1);}
+    50%{ transform:translateY(-3px) scale(1.015);}
+  }
+  .cat-wrap.jump svg{ animation:cat-jump 0.7s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  @keyframes cat-jump{
+    0%{ transform:translateY(0) scaleY(1) scaleX(1);}
+    15%{ transform:translateY(6px) scaleY(0.85) scaleX(1.1);}
+    45%{ transform:translateY(-38px) scaleY(1.08) scaleX(0.95);}
+    70%{ transform:translateY(0) scaleY(0.9) scaleX(1.08);}
+    85%{ transform:translateY(-6px) scaleY(1.03) scaleX(0.98);}
+    100%{ transform:translateY(0) scaleY(1) scaleX(1);}
+  }
+  .cat-wrap.jump .tail{ animation:tail-happy 0.35s ease-in-out infinite; }
+  .cat-wrap.wave svg{ animation:wave-jump 0.6s ease-in-out; }
+  @keyframes wave-jump{
+    0%{ transform:translateY(0) rotate(0deg);}
+    30%{ transform:translateY(-14px) rotate(-4deg);}
+    60%{ transform:translateY(0) rotate(3deg);}
+    100%{ transform:translateY(0) rotate(0deg);}
   }
 
-  .tail{ transform-origin: 168px 150px; animation:tail-sway 3.2s ease-in-out infinite; }
-  @keyframes tail-sway{
-    0%,100%{ transform:rotate(-6deg); }
-    50%{ transform:rotate(10deg); }
+  .cat-wrap.wave-long svg{ animation:sway-gentle 2s ease-in-out; }
+  @keyframes sway-gentle{
+    0%,100%{ transform:translateY(0) rotate(0deg);}
+    50%{ transform:translateY(-4px) rotate(2deg);}
+  }
+  .cat-wrap.wave-long .paw-right{
+    animation:paw-wave-loop 2s ease-in-out;
+  }
+  @keyframes paw-wave-loop{
+    0%,100%{ transform:rotate(0deg);}
+    12%{ transform:rotate(-32deg);}
+    24%{ transform:rotate(-8deg);}
+    36%{ transform:rotate(-30deg);}
+    48%{ transform:rotate(-8deg);}
+    60%{ transform:rotate(-30deg);}
+    72%{ transform:rotate(-8deg);}
+    84%{ transform:rotate(-20deg);}
+  }
+  .cat-wrap.wave-long .tail{
+    animation:tailsway 0.9s ease-in-out infinite;
   }
 
-  .eyes-open{ animation:blink 4.6s ease-in-out infinite; transform-origin:center; }
+  .cat-wrap.celebrate svg{ animation:celebrate-jump 2.2s ease-in-out; }
+  @keyframes celebrate-jump{
+    0%{ transform:translateY(0) rotate(0deg) scale(1);}
+    10%{ transform:translateY(-26px) rotate(-10deg) scale(1.08);}
+    20%{ transform:translateY(-4px) rotate(8deg) scale(1.03);}
+    30%{ transform:translateY(-22px) rotate(-8deg) scale(1.08);}
+    40%{ transform:translateY(0) rotate(6deg) scale(1.02);}
+    50%{ transform:translateY(-20px) rotate(-9deg) scale(1.07);}
+    60%{ transform:translateY(-2px) rotate(7deg) scale(1.02);}
+    70%{ transform:translateY(-14px) rotate(-5deg) scale(1.05);}
+    82%{ transform:translateY(0) rotate(4deg) scale(1.01);}
+    100%{ transform:translateY(0) rotate(0deg) scale(1);}
+  }
+  .cat-wrap.celebrate .tail{ animation:tail-happy 0.5s ease-in-out infinite; }
+  @keyframes tail-happy{
+    0%,100%{ transform:rotate(-14deg);}
+    50%{ transform:rotate(20deg);}
+  }
+
+  .heart-burst{
+    position:fixed;
+    z-index:6;
+    pointer-events:none;
+    font-size:1.3rem;
+    animation:heart-float 2.6s ease-out forwards;
+  }
+  @keyframes heart-float{
+    0%{ transform:translateY(0) scale(0.6); opacity:0;}
+    12%{ opacity:1; transform:translateY(-12px) scale(1.15);}
+    80%{ opacity:1;}
+    100%{ transform:translateY(-160px) scale(0.9); opacity:0;}
+  }
+
+  /* idle autonomous movement */
+  .cat-wrap.idle-look-left svg{ animation:look-left 1.4s ease-in-out; }
+  .cat-wrap.idle-look-right svg{ animation:look-right 1.4s ease-in-out; }
+  .cat-wrap.idle-stretch svg{ animation:stretch 1.6s ease-in-out; }
+  .cat-wrap.idle-tilt svg{ animation:tilt 1.8s ease-in-out; }
+  @keyframes look-left{
+    0%,100%{ transform:rotate(0deg) translateX(0);}
+    50%{ transform:rotate(-6deg) translateX(-6px);}
+  }
+  @keyframes look-right{
+    0%,100%{ transform:rotate(0deg) translateX(0);}
+    50%{ transform:rotate(6deg) translateX(6px);}
+  }
+  @keyframes stretch{
+    0%,100%{ transform:scale(1,1);}
+    40%{ transform:scale(1.08,0.92) translateY(4px);}
+    70%{ transform:scale(0.96,1.06) translateY(-3px);}
+  }
+  @keyframes tilt{
+    0%,100%{ transform:rotate(0deg);}
+    50%{ transform:rotate(9deg);}
+  }
+  .cat-wrap.idle-look-left .tail,
+  .cat-wrap.idle-look-right .tail{ animation-duration:1s; }
+
+  .tail{ transform-origin:85% 90%; animation:tailsway 2.6s ease-in-out infinite; }
+  @keyframes tailsway{
+    0%,100%{ transform:rotate(0deg);}
+    50%{ transform:rotate(10deg);}
+  }
+  .eye{ animation:blink 4.5s infinite; transform-origin:center; transition:transform 0.3s ease; }
+  .eye.right{ animation-delay:0.05s; }
   @keyframes blink{
-    0%,88%,100%{ transform:scaleY(1); }
-    92%{ transform:scaleY(0.08); }
-    96%{ transform:scaleY(1); }
+    0%,92%,100%{ transform:scaleY(1);}
+    95%{ transform:scaleY(0.1);}
   }
 
-  .wave-paw{ transform-origin:150px 128px; animation:wave 2.6s ease-in-out infinite; }
-  @keyframes wave{
-    0%,100%{ transform:rotate(0deg); }
-    15%{ transform:rotate(-24deg); }
-    30%{ transform:rotate(6deg); }
-    45%{ transform:rotate(-20deg); }
-    60%{ transform:rotate(0deg); }
+  /* cute eyes for the "asking" moment */
+  .cat-wrap.asking .eye{
+    animation:blink-cute 5.5s infinite;
+    transform:scale(1.25);
+  }
+  @keyframes blink-cute{
+    0%,90%,100%{ transform:scale(1.25) scaleY(1);}
+    94%{ transform:scale(1.25) scaleY(0.15);}
+  }
+  .sparkle{
+    opacity:0;
+    transition:opacity 0.3s ease;
+  }
+  .cat-wrap.asking .sparkle{
+    opacity:1;
+    animation:twinkle 1.6s ease-in-out infinite;
+  }
+  @keyframes twinkle{
+    0%,100%{ opacity:1; transform:scale(1);}
+    50%{ opacity:0.5; transform:scale(0.7);}
+  }
+  .lash{
+    opacity:0;
+    transition:opacity 0.3s ease;
+  }
+  .cat-wrap.asking .lash{ opacity:1; }
+  .cat-wrap.asking .cheek{ opacity:0.8; }
+  .paw-right{
+    transform-origin:60% 20%;
+  }
+  .cat-wrap.wave .paw-right{
+    animation:paw-wave 0.6s ease-in-out;
+  }
+  @keyframes paw-wave{
+    0%,100%{ transform:rotate(0deg);}
+    25%{ transform:rotate(-30deg);}
+    50%{ transform:rotate(-10deg);}
+    75%{ transform:rotate(-25deg);}
+  }
+  .cheek{ opacity:0.55; }
+
+  .hint{
+    font-size:0.78rem;
+    color:#B79A8C;
+    margin-top:2px;
+    margin-bottom:18px;
+    font-style:italic;
   }
 
   /* speech bubble */
   .bubble{
-    position:absolute;
-    top:-8px;
-    left:50%;
-    transform:translate(-50%,-100%) scale(0.85);
-    background:var(--white);
-    border:2px solid var(--blush-2);
-    border-radius:18px;
-    padding:10px 16px;
-    font-size:14px;
-    font-weight:600;
-    white-space:nowrap;
-    box-shadow:var(--shadow-sm);
-    opacity:0;
-    pointer-events:none;
-    transition:opacity 0.25s ease, transform 0.25s cubic-bezier(.3,1.6,.4,1);
+    background:var(--cream-deep);
+    border-radius:20px;
+    padding:16px 18px;
+    position:relative;
+    margin-bottom:22px;
+    min-height:60px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:opacity 0.25s ease;
   }
-  .bubble.show{
-    opacity:1;
-    transform:translate(-50%,-115%) scale(1);
-  }
-  .bubble::after{
-    content:"";
+  .bubble::before{
+    content:'';
     position:absolute;
-    bottom:-9px;
+    top:-9px;
     left:50%;
     transform:translateX(-50%);
-    border-width:9px 8px 0 8px;
+    border-width:0 9px 10px 9px;
     border-style:solid;
-    border-color:var(--white) transparent transparent transparent;
+    border-color:transparent transparent var(--cream-deep) transparent;
   }
-  .tap-hint{
-    text-align:center;
-    font-size:12.5px;
-    color:var(--ink-soft);
-    margin-top:2px;
-    opacity:0.85;
+  .bubble p{
+    margin:0;
+    font-size:1rem;
+    line-height:1.5;
+    font-weight:600;
+  }
+  .bubble .sub{
+    display:block;
+    font-weight:400;
+    font-size:0.85rem;
+    color:#8a716a;
+    margin-top:4px;
   }
 
-  /* ---------- dashboard ---------- */
-  .dash-title{
-    font-size:18px;
+  /* stages */
+  .panel{ display:none; }
+  .panel.active{ display:block; animation:fadein 0.35s ease; }
+  @keyframes fadein{
+    from{ opacity:0; transform:translateY(6px);}
+    to{ opacity:1; transform:translateY(0);}
+  }
+
+  .btn{
+    font-family:'Fredoka', sans-serif;
+    border:none;
+    border-radius:999px;
+    padding:13px 28px;
+    font-size:1rem;
+    font-weight:600;
+    cursor:pointer;
+    transition:transform 0.15s ease, box-shadow 0.15s ease;
+    box-shadow:0 6px 16px rgba(201,123,114,0.28);
+  }
+  .btn.primary{
+    background:var(--rose-deep);
+    color:#fff;
+  }
+  .btn.primary:hover{ transform:translateY(-2px) scale(1.03); box-shadow:0 10px 22px rgba(201,123,114,0.38); }
+  .btn.primary:active{ transform:translateY(0) scale(0.98); }
+  .btn:disabled{
+    opacity:0.55;
+    cursor:default;
+    transform:none !important;
+    box-shadow:0 4px 10px rgba(201,123,114,0.18) !important;
+  }
+
+  /* option cards */
+  .options{
     display:flex;
+    flex-direction:column;
+    gap:12px;
+    margin-bottom:18px;
+  }
+  .option{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    text-align:left;
+    background:#FFFDFA;
+    border:2px solid var(--cream-deep);
+    border-radius:18px;
+    padding:14px 16px;
+    cursor:pointer;
+    transition:border-color 0.18s ease, transform 0.18s ease, background 0.18s ease;
+    font-family:'Nunito', sans-serif;
+  }
+  .option:hover{
+    border-color:var(--rose);
+    background:#FFF6F1;
+    transform:translateX(3px);
+  }
+  .option.selected{
+    border-color:var(--rose-deep);
+    background:#FDEFEA;
+  }
+  .option .emoji{ font-size:1.7rem; flex-shrink:0; }
+  .option .details{ flex:1; }
+  .option .name{
+    font-family:'Fredoka', sans-serif;
+    font-weight:600;
+    font-size:1.02rem;
+    color:var(--ink);
+    margin-bottom:2px;
+  }
+  .option .meta{
+    font-size:0.82rem;
+    color:#8a716a;
+  }
+  .option .meta b{ color:var(--rose-deep); }
+
+  .location-row{
+    display:flex;
+    gap:8px;
+    margin-top:16px;
+  }
+  .loc-btn{
+    flex:1;
+    font-family:'Nunito', sans-serif;
+    font-weight:700;
+    font-size:0.85rem;
+    padding:11px 8px;
+    border-radius:14px;
+    border:2px solid var(--cream-deep);
+    background:#fff;
+    cursor:pointer;
+    transition:all 0.15s ease;
+  }
+  .loc-btn:hover{ border-color:var(--sage); background:#F3F7F1; }
+  .loc-btn.selected{ border-color:var(--sage-deep); background:#EAF1E6; }
+
+  .summary{
+    background:var(--cream-deep);
+    border-radius:16px;
+    padding:14px 16px;
+    font-size:0.9rem;
+    margin:14px 0 6px;
+    text-align:left;
+    line-height:1.6;
+  }
+  .summary b{ color:var(--rose-deep); }
+
+  .final-actions{
+    display:flex;
+    gap:10px;
+    justify-content:center;
+    margin-top:10px;
+  }
+
+  .confetti-piece{
+    position:fixed;
+    top:-20px;
+    z-index:5;
+    pointer-events:none;
+    font-size:1.3rem;
+    animation:fall linear forwards;
+  }
+  @keyframes fall{
+    to{ transform:translateY(105vh) rotate(360deg); opacity:0.9; }
+  }
+
+  .back-link{
+    display:inline-block;
+    margin-top:14px;
+    font-size:0.8rem;
+    color:#B79A8C;
+    cursor:pointer;
+    text-decoration:underline;
+  }
+
+  .time-grid{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    justify-content:center;
+  }
+  .time-chip{
+    font-family:'Fredoka', sans-serif;
+    font-weight:600;
+    font-size:0.9rem;
+    padding:10px 16px;
+    border-radius:999px;
+    border:2px solid var(--cream-deep);
+    background:#fff;
+    cursor:pointer;
+    transition:all 0.15s ease;
+  }
+  .time-chip:hover{ border-color:var(--rose); background:#FFF6F1; }
+  .time-chip.selected{ border-color:var(--rose-deep); background:#FDEFEA; color:var(--rose-deep); }
+
+  .custom-time-row{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    margin-top:16px;
+  }
+  .or-text{ font-size:0.82rem; color:#B79A8C; }
+  .time-input{
+    font-family:'Nunito', sans-serif;
+    font-size:0.9rem;
+    padding:8px 10px;
+    border-radius:12px;
+    border:2px solid var(--cream-deep);
+    background:#fff;
+    cursor:pointer;
+  }
+
+  .btn.ig{
+    background:linear-gradient(135deg, #E7A9A0, #C97B72 60%, #a85a86);
+    color:#fff;
+  }
+  .btn.ig:hover{ transform:translateY(-2px) scale(1.03); }
+  .ig-row{
+    margin-top:14px;
+    display:flex;
+    flex-direction:column;
     align-items:center;
     gap:8px;
-    margin:0 0 4px;
   }
-  .dash-sub{
-    font-size:12.5px;
-    color:var(--ink-soft);
-    margin:0 0 16px;
-  }
-  .dash-row{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:10px;
-    padding:11px 0;
-    border-bottom:1px dashed #F0DFD3;
-    opacity:0;
-    transform:translateY(8px);
-  }
-  .dash-row.reveal{
-    animation:row-in 0.5s ease forwards;
-  }
-  @keyframes row-in{
-    to{ opacity:1; transform:translateY(0); }
-  }
-  .dash-row:last-child{ border-bottom:none; }
-  .dash-label{
-    font-size:14px;
-    font-weight:700;
-    color:var(--ink);
-    display:flex;
-    align-items:center;
-    gap:6px;
-  }
-  .dash-value{
-    font-size:13.5px;
-    font-weight:600;
-    color:var(--latte-dark);
-    text-align:right;
-    transition:color 0.3s ease;
-  }
-  .dash-value.updated{ animation:pop 0.4s ease; color:#C4795A; }
-  @keyframes pop{
-    0%{ transform:scale(1); }
-    40%{ transform:scale(1.12); }
-    100%{ transform:scale(1); }
-  }
-  .bar-track{
-    width:120px;
-    height:10px;
-    background:#F3E3D6;
-    border-radius:999px;
-    overflow:hidden;
-  }
-  .bar-fill{
-    height:100%;
-    width:0%;
-    border-radius:999px;
-    background:linear-gradient(90deg, var(--sakura), var(--latte-dark));
-    transition:width 1.1s cubic-bezier(.2,.8,.2,1);
+  .ig-note{
+    font-size:0.75rem;
+    color:#B79A8C;
+    margin:0;
+    max-width:280px;
   }
 
-  /* ---------- lucky paw ---------- */
-  .paw-btn{
-    display:block;
-    width:100%;
-    border:none;
-    border-radius:20px;
-    background:linear-gradient(135deg, var(--sakura), var(--blush-2));
-    color:#fff;
-    font-family:'Baloo 2', cursive;
-    font-size:17px;
-    font-weight:700;
-    padding:16px 12px;
-    cursor:pointer;
-    box-shadow:0 10px 22px rgba(246,168,192,0.45);
-    transition:transform 0.15s cubic-bezier(.3,1.6,.4,1), box-shadow 0.15s ease;
-  }
-  .paw-btn:hover{ transform:translateY(-2px); box-shadow:0 14px 26px rgba(246,168,192,0.5); }
-  .paw-btn:active{ transform:translateY(1px) scale(0.98); }
-
-  .fortune-box{
-    margin-top:14px;
-    min-height:20px;
-    text-align:center;
-    font-size:14.5px;
-    font-weight:600;
-    color:var(--latte-dark);
-    padding:0 4px;
-    opacity:0;
-  }
-  .fortune-box.show{ animation:fortune-in 0.45s ease forwards; }
-  @keyframes fortune-in{
-    0%{ opacity:0; transform:translateY(6px); }
-    100%{ opacity:1; transform:translateY(0); }
-  }
-
-  /* ---------- ending ---------- */
-  .ending{
-    text-align:center;
-    padding:34px 22px;
-  }
-  .ending .sakura-top{ font-size:26px; margin-bottom:6px; }
-  .ending h2{ font-size:20px; margin:0 0 14px; }
-  .ending p{
-    font-size:14.5px;
-    line-height:1.75;
-    color:var(--ink-soft);
-    margin:0 0 6px;
-  }
-  .ending .cat-emoji{ font-size:24px; margin-top:10px; display:block; }
-
-  /* ---------- audio toggle ---------- */
-  .audio-btn{
-    position:fixed;
-    bottom:18px;
-    right:18px;
-    z-index:5;
-    width:48px;
-    height:48px;
+  .music-toggle{
+    position:absolute;
+    top:14px;
+    right:14px;
+    width:38px;
+    height:38px;
     border-radius:50%;
-    border:none;
-    background:var(--white);
-    box-shadow:var(--shadow-sm);
-    font-size:19px;
+    border:2px solid var(--cream-deep);
+    background:#fff;
+    font-size:1.1rem;
     cursor:pointer;
     display:flex;
     align-items:center;
     justify-content:center;
-    transition:transform 0.15s ease;
+    transition:all 0.15s ease;
+    z-index:2;
   }
-  .audio-btn:hover{ transform:scale(1.06); }
-  .audio-btn:focus-visible, .paw-btn:focus-visible, .cat-svg-wrap:focus-visible{
-    outline:3px solid var(--latte-dark);
-    outline-offset:3px;
+  .music-toggle:hover{ border-color:var(--rose); transform:scale(1.06); }
+  .music-toggle.playing{
+    border-color:var(--sage-deep);
+    animation:music-pulse 1.4s ease-in-out infinite;
+  }
+  @keyframes music-pulse{
+    0%,100%{ box-shadow:0 0 0 0 rgba(143,168,136,0.35); }
+    50%{ box-shadow:0 0 0 6px rgba(143,168,136,0); }
   }
 
-  footer.note{
-    text-align:center;
-    font-size:11.5px;
-    color:#C6AF9E;
-    margin-top:4px;
+  @media (prefers-reduced-motion: reduce){
+    .cat-wrap svg, .tail, .eye, .paw-right{ animation:none !important; }
   }
 </style>
 </head>
 <body>
 
-<div id="particle-layer"></div>
+<div class="paw-bg" id="pawBg"></div>
 
-<div class="wrap">
+<div class="stage">
+  <button class="music-toggle" id="musicToggle" aria-label="play music" title="play music">🎵</button>
+  <audio id="bgMusic" loop preload="none">
+    <source src="music.mp3" type="audio/mpeg">
+  </audio>
+  <h1 class="title">a question, delivered by cat 🐾</h1>
 
-  <!-- HERO -->
-  <section class="card hero">
-    <span class="eyebrow">a tiny deploy, just for you 🌸</span>
-    <h1>Good luck tonight,<br>Favorite CSR! 🌸</h1>
-    <p>Just a tiny surprise to hopefully make you smile before your shift.</p>
+  <div class="cat-wrap" id="catWrap" title="pet the cat">
+    <svg viewBox="0 0 200 190" xmlns="http://www.w3.org/2000/svg">
+      <!-- tail -->
+      <path class="tail" d="M165 140 Q195 130 185 95 Q180 80 165 90" fill="none" stroke="#E8B98F" stroke-width="14" stroke-linecap="round"/>
+      <!-- body -->
+      <ellipse cx="100" cy="150" rx="55" ry="34" fill="#F3CFA0"/>
+      <!-- head -->
+      <circle cx="100" cy="95" r="52" fill="#F6D9AE"/>
+      <!-- ears -->
+      <path d="M58 60 L48 20 L88 52 Z" fill="#F6D9AE"/>
+      <path d="M142 60 L152 20 L112 52 Z" fill="#F6D9AE"/>
+      <path d="M63 52 L57 30 L80 50 Z" fill="#EFAFA4"/>
+      <path d="M137 52 L143 30 L120 50 Z" fill="#EFAFA4"/>
+      <!-- stripes -->
+      <path d="M70 45 L75 58" stroke="#E8B98F" stroke-width="4" stroke-linecap="round"/>
+      <path d="M130 45 L125 58" stroke="#E8B98F" stroke-width="4" stroke-linecap="round"/>
+      <!-- cheeks -->
+      <ellipse class="cheek" cx="66" cy="105" rx="12" ry="8" fill="#F2A79E"/>
+      <ellipse class="cheek" cx="134" cy="105" rx="12" ry="8" fill="#F2A79E"/>
+      <!-- eyes -->
+      <ellipse class="eye left" cx="82" cy="92" rx="7" ry="9" fill="#3A2C30"/>
+      <ellipse class="eye right" cx="118" cy="92" rx="7" ry="9" fill="#3A2C30"/>
+      <circle cx="84" cy="89" r="2" fill="#fff"/>
+      <circle cx="120" cy="89" r="2" fill="#fff"/>
+      <circle class="sparkle" cx="79" cy="95" r="1.6" fill="#fff"/>
+      <circle class="sparkle" cx="115" cy="95" r="1.6" fill="#fff"/>
+      <path class="lash" d="M76 84 L72 80" stroke="#3A2C30" stroke-width="1.6" stroke-linecap="round"/>
+      <path class="lash" d="M82 82 L80 77" stroke="#3A2C30" stroke-width="1.6" stroke-linecap="round"/>
+      <path class="lash" d="M124 84 L128 80" stroke="#3A2C30" stroke-width="1.6" stroke-linecap="round"/>
+      <path class="lash" d="M118 82 L120 77" stroke="#3A2C30" stroke-width="1.6" stroke-linecap="round"/>
+      <!-- nose + mouth -->
+      <path d="M96 105 L104 105 L100 111 Z" fill="#D98B7E"/>
+      <path d="M100 111 Q100 116 92 117" fill="none" stroke="#3A2C30" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M100 111 Q100 116 108 117" fill="none" stroke="#3A2C30" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- whiskers -->
+      <path d="M40 100 L68 102" stroke="#C9A879" stroke-width="2"/>
+      <path d="M40 112 L68 110" stroke="#C9A879" stroke-width="2"/>
+      <path d="M160 100 L132 102" stroke="#C9A879" stroke-width="2"/>
+      <path d="M160 112 L132 110" stroke="#C9A879" stroke-width="2"/>
+      <!-- waving paw -->
+      <ellipse class="paw-right" cx="148" cy="128" rx="15" ry="17" fill="#F6D9AE"/>
+      <!-- other paw -->
+      <ellipse cx="60" cy="168" rx="16" ry="12" fill="#F3CFA0"/>
+      <ellipse cx="140" cy="168" rx="16" ry="12" fill="#F3CFA0"/>
+    </svg>
+  </div>
+  <div class="hint" id="hint">tap the cat</div>
 
-    <div class="cat-stage">
-      <div class="bubble" id="bubble">Hi!</div>
-      <div class="cat-svg-wrap" id="catWrap" tabindex="0" role="button" aria-label="Tap the cat for encouragement">
-        <svg width="200" height="200" viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
-          <!-- tail -->
-          <path class="tail" d="M168 150 C 205 145, 210 105, 185 92 C 205 100, 202 150, 168 158 Z" fill="#E79A5F"/>
-          <!-- body -->
-          <ellipse cx="110" cy="150" rx="62" ry="48" fill="#F3AE72"/>
-          <!-- back paws -->
-          <ellipse cx="76" cy="192" rx="16" ry="10" fill="#F3AE72"/>
-          <ellipse cx="144" cy="192" rx="16" ry="10" fill="#F3AE72"/>
-          <!-- left resting paw -->
-          <ellipse cx="70" cy="168" rx="13" ry="9" fill="#F7C193"/>
-          <!-- waving paw (right) -->
-          <g class="wave-paw">
-            <ellipse cx="150" cy="130" rx="12" ry="9" fill="#F7C193"/>
-          </g>
-          <!-- head -->
-          <circle cx="110" cy="92" r="52" fill="#F3AE72"/>
-          <!-- ears -->
-          <path d="M66 60 L52 20 L96 46 Z" fill="#F3AE72"/>
-          <path d="M74 52 L66 30 L92 46 Z" fill="#F9C9A0"/>
-          <path d="M154 60 L168 20 L124 46 Z" fill="#F3AE72"/>
-          <path d="M146 52 L154 30 L128 46 Z" fill="#F9C9A0"/>
-          <!-- stripes -->
-          <path d="M92 42 L88 30" stroke="#E0904F" stroke-width="4" stroke-linecap="round"/>
-          <path d="M128 42 L132 30" stroke="#E0904F" stroke-width="4" stroke-linecap="round"/>
-          <!-- cheeks -->
-          <circle cx="80" cy="104" r="10" fill="#F6A8C0" opacity="0.55"/>
-          <circle cx="140" cy="104" r="10" fill="#F6A8C0" opacity="0.55"/>
-          <!-- eyes -->
-          <g class="eyes-open">
-            <ellipse cx="92" cy="90" rx="6" ry="8" fill="#5B4636"/>
-            <ellipse cx="128" cy="90" rx="6" ry="8" fill="#5B4636"/>
-            <circle cx="94" cy="87" r="1.6" fill="#fff"/>
-            <circle cx="130" cy="87" r="1.6" fill="#fff"/>
-          </g>
-          <!-- nose -->
-          <path d="M106 100 L114 100 L110 106 Z" fill="#D9748E"/>
-          <!-- mouth -->
-          <path d="M110 106 C 108 112, 100 114, 96 110" stroke="#5B4636" stroke-width="2.4" fill="none" stroke-linecap="round"/>
-          <path d="M110 106 C 112 112, 120 114, 124 110" stroke="#5B4636" stroke-width="2.4" fill="none" stroke-linecap="round"/>
-          <!-- whiskers -->
-          <path d="M60 96 L82 100 M60 108 L82 106" stroke="#E0904F" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
-          <path d="M160 96 L138 100 M160 108 L138 106" stroke="#E0904F" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
-        </svg>
+  <div class="bubble" id="bubble">
+    <p id="bubbleText"></p>
+  </div>
+
+  <!-- STAGE 0: intro -->
+  <div class="panel active" id="panel-0">
+    <button class="btn primary" id="startBtn">go on, ask 🐟</button>
+  </div>
+
+  <!-- STAGE 1: the question -->
+  <div class="panel" id="panel-1">
+    <button class="btn primary" id="yesBtn">yes, obviously 💗</button>
+  </div>
+
+  <!-- STAGE 2: pick a date type -->
+  <div class="panel" id="panel-2">
+    <div class="options" id="dateOptions">
+      <div class="option" data-type="coffee">
+        <span class="emoji">☕</span>
+        <div class="details">
+          <div class="name">Coffee Date</div>
+          <div class="meta">slow mornings, good conversation, <b>my favorite kind</b></div>
+        </div>
+      </div>
+      <div class="option" data-type="lunch">
+        <span class="emoji">🍜</span>
+        <div class="details">
+          <div class="name">Lunch Date</div>
+          <div class="meta">something proper to eat, no rush</div>
+        </div>
+      </div>
+      <div class="option" data-type="dessert">
+        <span class="emoji">🍰</span>
+        <div class="details">
+          <div class="name">Dessert Date</div>
+          <div class="meta">sweet ending, sweeter company</div>
+        </div>
       </div>
     </div>
-    <p class="tap-hint">psst — tap the cat 🐾</p>
-  </section>
+  </div>
 
-  <!-- DASHBOARD -->
-  <section class="card">
-    <h2 class="dash-title">🐱 Meow Monitoring System</h2>
-    <p class="dash-sub">running a quick system check before your shift...</p>
+  <!-- STAGE 3: pick a location -->
+  <div class="panel" id="panel-3">
+    <div class="location-row" id="locOptions">
+      <button class="loc-btn" data-loc="Ayala Malls Manila Bay">Ayala Malls<br>Manila Bay</button>
+      <button class="loc-btn" data-loc="Mall of Asia">Mall of<br>Asia</button>
+    </div>
+    <button class="btn primary" id="confirmLocBtn" style="margin-top:18px; display:none;">lock it in 🐾</button>
+  </div>
 
-    <div id="dashboard">
-      <div class="dash-row" data-row>
-        <span class="dash-label">📍 Favorite Human</span>
-        <span class="dash-value">✅ Favorite CSR detected</span>
+  <!-- STAGE 4: pick a time -->
+  <div class="panel" id="panel-4">
+    <div class="options" id="timeOptions">
+      <div class="time-grid">
+        <button class="time-chip" data-time="10:00 AM">10:00 AM</button>
+        <button class="time-chip" data-time="1:00 PM">1:00 PM</button>
+        <button class="time-chip" data-time="3:00 PM">3:00 PM</button>
+        <button class="time-chip" data-time="5:00 PM">5:00 PM</button>
+        <button class="time-chip" data-time="7:00 PM">7:00 PM</button>
       </div>
-      <div class="dash-row" data-row>
-        <span class="dash-label">😴 Sleep Battery</span>
-        <span style="display:flex; align-items:center; gap:8px;">
-          <span class="bar-track"><span class="bar-fill" id="sleepBar"></span></span>
-          <span class="dash-value" id="sleepPercent" style="min-width:34px;">0%</span>
-        </span>
-      </div>
-      <div class="dash-row" data-row>
-        <span class="dash-label">☕ Coffee Buff</span>
-        <span class="dash-value" id="coffeeVal">Loading...</span>
-      </div>
-      <div class="dash-row" data-row>
-        <span class="dash-label">😤 Customer Patience</span>
-        <span class="dash-value" id="patienceVal">Calculating...</span>
-      </div>
-      <div class="dash-row" data-row>
-        <span class="dash-label">🎯 Tonight's Mission</span>
-        <span class="dash-value">Survive the shift 💪</span>
-      </div>
-      <div class="dash-row" data-row>
-        <span class="dash-label">😴 Sleeping Beauty Mode</span>
-        <span class="dash-value">Locked until 9:00 AM</span>
-      </div>
-      <div class="dash-row" data-row>
-        <span class="dash-label">🎁 Reward</span>
-        <span class="dash-value">Guilt-free nap tomorrow</span>
+      <div class="custom-time-row">
+        <span class="or-text">or pick exactly:</span>
+        <input type="time" id="customTime" class="time-input">
       </div>
     </div>
-  </section>
+    <button class="btn primary" id="confirmTimeBtn" style="margin-top:14px; display:none;">that works 🕒</button>
+  </div>
 
-  <!-- LUCKY PAW -->
-  <section class="card" style="text-align:center;">
-    <h2 style="font-size:17px; margin:0 0 4px;">Need a little extra luck?</h2>
-    <p style="font-size:13px; color:var(--ink-soft); margin:0 0 16px;">tap the paw for a fortune</p>
-    <button class="paw-btn" id="paw-btn">🐾 Tap for Luck</button>
-    <div class="fortune-box" id="fortuneBox"></div>
-  </section>
-
-  <!-- ENDING -->
-  <section class="card ending">
-    <div class="sakura-top">🌸</div>
-    <h2>That's all.</h2>
-    <p>Hope this made you smile even just a little.</p>
-    <p>Have a safe shift.</p>
-    <p>I'll be cheering for you.</p>
-    <span class="cat-emoji">🐱</span>
-  </section>
-
-  <footer class="note">made with a bit of code and a lot of good luck</footer>
+  <!-- STAGE 5: summary -->
+  <div class="panel" id="panel-5">
+    <div class="summary" id="summaryBox"></div>
+    <div class="final-actions" id="finalActions">
+      <button class="btn primary" id="celebrateBtn">can't wait 🎀</button>
+    </div>
+    <div class="ig-row" id="igRow" style="display:none;">
+      <button class="btn ig" id="sendIgBtn">share to Instagram 📩</button>
+      <p class="ig-note">opens your phone's share sheet &mdash; pick Instagram to send it straight to Nic, no login needed</p>
+    </div>
+    <span class="back-link" id="restartLink">start over</span>
+  </div>
 </div>
 
-<button class="audio-btn" id="audioBtn" aria-label="Toggle background sound">🔇</button>
-
-<!--
-  Drop your mp3 file in the SAME FOLDER as this HTML file and name it
-  "cat-lofi.mp3" (or change the src below to match your filename).
-  It will loop softly once the cat is tapped, and can be muted with
-  the button in the bottom-right corner.
--->
-<audio id="bgAudio" src="song.mp3" loop preload="auto"></audio>
-
 <script>
-/* ================= particles: sakura petals + paw prints ================= */
-const layer = document.getElementById('particle-layer');
-const petals = ['🌸','🌸','🌸','🌸'];
-const paws = ['🐾'];
-
-function spawnParticle(){
-  const useCat = Math.random() < 0.28;
-  const el = document.createElement('div');
-  el.className = useCat ? 'paw' : 'petal';
-  el.textContent = useCat ? paws[0] : petals[Math.floor(Math.random()*petals.length)];
-  const startX = Math.random() * 100;
-  const drift = (Math.random() * 120 - 60).toFixed(0) + 'px';
-  const duration = 9 + Math.random() * 6;
-  el.style.left = startX + 'vw';
-  el.style.setProperty('--drift', drift);
-  el.style.animationDuration = duration + 's';
-  el.style.fontSize = (useCat ? 14 : 16) + Math.random()*10 + 'px';
-  layer.appendChild(el);
-  setTimeout(() => el.remove(), duration * 1000 + 500);
-}
-setInterval(spawnParticle, 900);
-for(let i=0;i<5;i++) setTimeout(spawnParticle, i*350);
-
-/* ================= dashboard reveal sequence ================= */
-const rows = document.querySelectorAll('[data-row]');
-const sleepBar = document.getElementById('sleepBar');
-const sleepPercent = document.getElementById('sleepPercent');
-
-function fillSleepBattery(){
-  if(!sleepBar || sleepBar.dataset.filled) return;
-  sleepBar.dataset.filled = 'true';
-  sleepBar.style.width = '80%';
-  let n = 0;
-  const step = setInterval(() => {
-    n += 4;
-    if(n >= 80){ n = 80; clearInterval(step); }
-    sleepPercent.textContent = n + '%';
-  }, 55);
-}
-
-rows.forEach((row, i) => {
-  setTimeout(() => {
-    row.classList.add('reveal');
-    if(row.querySelector('#sleepBar')){
-      setTimeout(fillSleepBattery, 150);
-    }
-  }, i * 420);
-});
-
-// failsafe: whatever happens above, make sure everything is visible and filled
-setTimeout(() => {
-  rows.forEach(row => row.classList.add('reveal'));
-  fillSleepBattery();
-}, 3500);
-
-const totalRevealTime = rows.length * 420 + 300;
-
-setTimeout(() => {
-  const coffee = document.getElementById('coffeeVal');
-  coffee.textContent = 'Activated ☕';
-  coffee.classList.add('updated');
-}, totalRevealTime + 2000);
-
-setTimeout(() => {
-  const patience = document.getElementById('patienceVal');
-  patience.innerHTML = 'Warning: Unknown...<br>Proceed carefully 😂';
-  patience.classList.add('updated');
-}, totalRevealTime + 3000);
-
-/* ================= cat interaction ================= */
 const catWrap = document.getElementById('catWrap');
+const bubbleText = document.getElementById('bubbleText');
+const hint = document.getElementById('hint');
+
+const panels = document.querySelectorAll('.panel');
+function showPanel(id){
+  panels.forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+}
+
 const bubble = document.getElementById('bubble');
-const catLines = [
-  "Remember to drink water! 💧",
-  "You got this, Favorite CSR! 💪",
-  "Don't let the toxic customers win. 😼",
-  "Break time = snack time. 🐟",
-  "Sleeping Beauty mode unlocks after work. 😴",
-  "One customer closer to your day off!",
-  "Take a deep breath — you've got this. 🌸"
-];
-let bubbleTimer;
-function triggerCat(){
-  catWrap.classList.remove('bounce');
+const bgMusic = document.getElementById('bgMusic');
+const musicToggle = document.getElementById('musicToggle');
+let musicPlaying = false;
+
+musicToggle.addEventListener('click', () => {
+  if(musicPlaying){
+    bgMusic.pause();
+    musicToggle.textContent = '🎵';
+    musicToggle.classList.remove('playing');
+  } else {
+    bgMusic.play().catch(() => {
+      setBubble("add a music.mp3 file next to this page to hear it 🎵");
+    });
+    musicToggle.textContent = '🔊';
+    musicToggle.classList.add('playing');
+  }
+  musicPlaying = !musicPlaying;
+});
+
+function setBubble(html){
+  bubble.style.opacity = 0;
+  setTimeout(() => {
+    bubbleText.innerHTML = html;
+    bubble.style.opacity = 1;
+  }, 200);
+}
+
+function wave(){
+  catWrap.classList.remove('wave');
   void catWrap.offsetWidth; // restart animation
-  catWrap.classList.add('bounce');
+  catWrap.classList.add('wave');
+  setTimeout(()=> catWrap.classList.remove('wave'), 650);
+}
 
-  const msg = catLines[Math.floor(Math.random()*catLines.length)];
-  bubble.textContent = msg;
-  bubble.classList.add('show');
-  clearTimeout(bubbleTimer);
-  bubbleTimer = setTimeout(() => bubble.classList.remove('show'), 2600);
+function jump(){
+  catWrap.classList.remove('jump');
+  void catWrap.offsetWidth;
+  catWrap.classList.add('jump');
+  setTimeout(()=> catWrap.classList.remove('jump'), 700);
+}
 
-  // start the mp3 loop on first tap (tapping is a user gesture, so autoplay rules allow this)
-  if(bgAudio.paused){
-    bgAudio.volume = 0.35;
-    bgAudio.play().catch(() => { /* file may not be added yet */ });
-    audioBtn.textContent = '🔊';
+setBubble("hi Riri 🐈 &mdash; my favorite CSR is here.<span class='sub'>(tap me when you're ready)</span>");
+
+catWrap.addEventListener('click', () => {
+  jump();
+});
+
+function waveLong(){
+  catWrap.classList.remove('wave-long');
+  void catWrap.offsetWidth;
+  catWrap.classList.add('wave-long');
+  setTimeout(()=> catWrap.classList.remove('wave-long'), 2000);
+}
+
+document.getElementById('startBtn').addEventListener('click', (e) => {
+  const btn = e.currentTarget;
+  if(btn.disabled) return;
+  btn.disabled = true;
+  waveLong();
+  setBubble("wake up, sleeping beauty 😴✨<span class='sub'>I have something to ask you...</span>");
+  hint.textContent = "";
+  setTimeout(() => {
+    setBubble("Riri, will you go on a date with me?");
+    catWrap.classList.add('asking');
+    showPanel(1);
+  }, 2000);
+});
+
+document.getElementById('yesBtn').addEventListener('click', (e) => {
+  const btn = e.currentTarget;
+  if(btn.disabled) return;
+  btn.disabled = true;
+  catWrap.classList.remove('asking');
+  celebrateCat();
+  setBubble("yay!! 🎉💕");
+  setTimeout(() => {
+    setBubble("okay okay &mdash; pick what kind of date first 👇");
+    showPanel(2);
+  }, 2100);
+});
+
+function celebrateCat(){
+  catWrap.classList.remove('celebrate');
+  void catWrap.offsetWidth;
+  catWrap.classList.add('celebrate');
+  setTimeout(() => catWrap.classList.remove('celebrate'), 2200);
+
+  const rect = catWrap.getBoundingClientRect();
+  const hearts = ['💗','💕','✨','🎀'];
+  const burstWave = () => {
+    for(let i=0;i<7;i++){
+      const h = document.createElement('div');
+      h.className = 'heart-burst';
+      h.textContent = hearts[Math.floor(Math.random()*hearts.length)];
+      h.style.left = (rect.left + rect.width/2 + (Math.random()*90-45)) + 'px';
+      h.style.top = (rect.top + rect.height*0.3) + 'px';
+      h.style.animationDelay = (Math.random()*0.3)+'s';
+      document.body.appendChild(h);
+      setTimeout(() => h.remove(), 3000);
+    }
+  };
+  burstWave();
+  setTimeout(burstWave, 700);
+  setTimeout(burstWave, 1400);
+}
+
+let chosenType = null;
+let chosenLoc = null;
+const typeLabels = {
+  coffee: {emoji:'☕', name:'Coffee Date', line:"good choice &mdash; slow mornings and good talk."},
+  lunch: {emoji:'🍜', name:'Lunch Date', line:"lunch it is &mdash; bring your appetite."},
+  dessert: {emoji:'🍰', name:'Dessert Date', line:"something sweet, to match the company."}
+};
+
+document.querySelectorAll('.option').forEach(opt => {
+  opt.addEventListener('click', () => {
+    document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+    opt.classList.add('selected');
+    chosenType = opt.dataset.type;
+    wave();
+    const t = typeLabels[chosenType];
+    setBubble(`${t.line}<span class='sub'>now, where should we go?</span>`);
+    setTimeout(() => showPanel(3), 500);
+  });
+});
+
+document.querySelectorAll('.loc-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.loc-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    chosenLoc = btn.dataset.loc;
+    wave();
+    document.getElementById('confirmLocBtn').style.display = 'inline-block';
+    setBubble(`${chosenLoc} it is 📍<span class='sub'>ready to make it official?</span>`);
+  });
+});
+
+document.getElementById('confirmLocBtn').addEventListener('click', () => {
+  wave();
+  setBubble("almost done &mdash; what time works for you?");
+  showPanel(4);
+});
+
+let chosenTime = null;
+
+function formatCustomTime(value){
+  // value is "HH:MM" 24hr
+  const [h, m] = value.split(':').map(Number);
+  const period = h >= 12 ? 'PM' : 'AM';
+  const hour12 = ((h + 11) % 12) + 1;
+  return `${hour12}:${m.toString().padStart(2,'0')} ${period}`;
+}
+
+document.querySelectorAll('.time-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    document.querySelectorAll('.time-chip').forEach(c => c.classList.remove('selected'));
+    chip.classList.add('selected');
+    document.getElementById('customTime').value = '';
+    chosenTime = chip.dataset.time;
+    wave();
+    document.getElementById('confirmTimeBtn').style.display = 'inline-block';
+    setBubble(`${chosenTime} it is 🕒<span class='sub'>ready to make it official?</span>`);
+  });
+});
+
+document.getElementById('customTime').addEventListener('input', (e) => {
+  if(!e.target.value) return;
+  document.querySelectorAll('.time-chip').forEach(c => c.classList.remove('selected'));
+  chosenTime = formatCustomTime(e.target.value);
+  wave();
+  document.getElementById('confirmTimeBtn').style.display = 'inline-block';
+  setBubble(`${chosenTime} it is 🕒<span class='sub'>ready to make it official?</span>`);
+});
+
+document.getElementById('confirmTimeBtn').addEventListener('click', () => {
+  const t = typeLabels[chosenType];
+  document.getElementById('summaryBox').innerHTML =
+    `<b>${t.emoji} ${t.name}</b><br>` +
+    `📍 ${chosenLoc}<br>` +
+    `🕒 ${chosenTime}<br>` +
+    `👤 just us two &mdash; my favorite CSR & her sleeping beauty energy`;
+  setBubble("perfect. it's a date, Riri 💌");
+  wave();
+  showPanel(5);
+  document.getElementById('igRow').style.display = 'flex';
+});
+
+document.getElementById('celebrateBtn').addEventListener('click', () => {
+  wave();
+  setBubble("counting down already 🐾💗");
+  launchConfetti();
+});
+
+document.getElementById('restartLink').addEventListener('click', () => {
+  chosenType = null; chosenLoc = null; chosenTime = null;
+  catWrap.classList.remove('asking');
+  document.getElementById('startBtn').disabled = false;
+  document.getElementById('yesBtn').disabled = false;
+  document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+  document.querySelectorAll('.loc-btn').forEach(b => b.classList.remove('selected'));
+  document.querySelectorAll('.time-chip').forEach(c => c.classList.remove('selected'));
+  document.getElementById('customTime').value = '';
+  document.getElementById('confirmLocBtn').style.display = 'none';
+  document.getElementById('confirmTimeBtn').style.display = 'none';
+  document.getElementById('igRow').style.display = 'none';
+  hint.textContent = "tap the cat";
+  setBubble("hi Riri 🐈 &mdash; my favorite CSR is here.<span class='sub'>(tap me when you're ready)</span>");
+  showPanel(0);
+});
+
+// ---- Instagram share handoff ----
+// Fallback deep link only used on devices without native share support (e.g. desktop browsers).
+const NIC_IG_USERNAME = "your_ig_username";
+
+document.getElementById('sendIgBtn').addEventListener('click', async () => {
+  const t = typeLabels[chosenType];
+  const message =
+`Hi Nic! Here's our date schedule 🐾
+${t.emoji} ${t.name}
+📍 ${chosenLoc}
+🕒 ${chosenTime}
+— sent from your cat's website 💌`;
+
+  wave();
+
+  if(navigator.share){
+    try{
+      await navigator.share({ text: message });
+      setBubble("sent! 💌");
+    }catch(err){
+      // she backed out of the share sheet — no error needed
+    }
+    return;
+  }
+
+  // Desktop fallback: no native share sheet available
+  try{
+    await navigator.clipboard.writeText(message);
+    setBubble("copied! opening Instagram &mdash; just paste it in 📩");
+  }catch(e){
+    setBubble("opening Instagram &mdash; here's the message to paste:<span class='sub'>" + message.replace(/\n/g,' · ') + "</span>");
+  }
+  window.open(`https://ig.me/m/${NIC_IG_USERNAME}`, '_blank');
+});
+
+// ---- idle autonomous cat movement ----
+const idleClasses = ['idle-look-left','idle-look-right','idle-stretch','idle-tilt'];
+let idleTimer = null;
+
+function scheduleIdle(){
+  const delay = 3000 + Math.random()*3500;
+  idleTimer = setTimeout(() => {
+    if(!catWrap.classList.contains('wave')){
+      const cls = idleClasses[Math.floor(Math.random()*idleClasses.length)];
+      catWrap.classList.add(cls);
+      setTimeout(() => catWrap.classList.remove(cls), 1900);
+    }
+    scheduleIdle();
+  }, delay);
+}
+scheduleIdle();
+
+// ambient paw prints
+const pawBg = document.getElementById('pawBg');
+for(let i=0;i<10;i++){
+  const s = document.createElement('span');
+  s.textContent = '🐾';
+  s.style.left = Math.random()*100+'%';
+  s.style.animationDelay = (Math.random()*14)+'s';
+  s.style.animationDuration = (10+Math.random()*8)+'s';
+  s.style.fontSize = (14+Math.random()*14)+'px';
+  pawBg.appendChild(s);
+}
+
+function launchConfetti(){
+  const pieces = ['🎀','💗','🐾','✨','🌸'];
+  for(let i=0;i<36;i++){
+    const el = document.createElement('div');
+    el.className = 'confetti-piece';
+    el.textContent = pieces[Math.floor(Math.random()*pieces.length)];
+    el.style.left = Math.random()*100+'vw';
+    el.style.animationDuration = (2.2+Math.random()*1.8)+'s';
+    el.style.fontSize = (14+Math.random()*14)+'px';
+    document.body.appendChild(el);
+    setTimeout(()=> el.remove(), 4200);
   }
 }
-catWrap.addEventListener('click', triggerCat);
-catWrap.addEventListener('keydown', (e) => { if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); triggerCat(); }});
-
-/* ================= lucky paw fortunes ================= */
-const fortunes = [
-  "🍀 Today's queue will be kinder than expected.",
-  "🐾 A difficult customer may appear... but you'll handle it.",
-  "🌸 Manifesting a peaceful shift.",
-  "😴 Maximum nap bonus unlocked after work.",
-  "☕ Critical coffee buff acquired!",
-  "🎧 A calm playlist appears at just the right moment.",
-  "🐟 A snack break saves the day."
-];
-const fortuneBox = document.getElementById('fortuneBox');
-document.getElementById('paw-btn').addEventListener('click', () => {
-  fortuneBox.classList.remove('show');
-  void fortuneBox.offsetWidth;
-  fortuneBox.textContent = fortunes[Math.floor(Math.random()*fortunes.length)];
-  fortuneBox.classList.add('show');
-});
-
-/* ================= mp3 loop control ================= */
-const bgAudio = document.getElementById('bgAudio');
-const audioBtn = document.getElementById('audioBtn');
-
-audioBtn.addEventListener('click', () => {
-  if(bgAudio.paused){
-    bgAudio.volume = 0.35;
-    bgAudio.play().catch(() => {});
-    audioBtn.textContent = '🔊';
-  } else {
-    bgAudio.pause();
-    audioBtn.textContent = '🔇';
-  }
-});
 </script>
-
 </body>
 </html>
