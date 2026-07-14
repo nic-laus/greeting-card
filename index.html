@@ -695,7 +695,7 @@
       <div class="ec-emoji">🐾</div>
       <h2>our date, officially set!</h2>
       <div class="ec-row" id="exportRow"></div>
-      <div class="ec-footer">from Riri &amp; her favorite CSR 💗</div>
+      <div class="ec-footer">from Riri, Nic's favorite sleepy girl 💗</div>
     </div>
     <span class="back-link" id="restartLink">start over</span>
   </div>
@@ -905,7 +905,7 @@ document.getElementById('confirmTimeBtn').addEventListener('click', () => {
     `📍 ${chosenLoc}<br>` +
     `🕒 ${chosenTime}<br>` +
     `👤 just us two &mdash; my favorite CSR & her sleeping beauty energy`;
-  setBubble("perfect. it's a date, Riri 💌<span class='sub'>tap below to save a picture of it</span>");
+  setBubble("perfect. it's a date, Riri 💌");
   wave();
   showPanel(5);
   document.getElementById('igRow').style.display = 'flex';
@@ -915,6 +915,9 @@ document.getElementById('celebrateBtn').addEventListener('click', () => {
   wave();
   setBubble("counting down already 🐾💗");
   launchConfetti();
+  setTimeout(() => {
+    setBubble("one last thing &mdash; download the picture below and send it to me on Instagram, Riri! 📸💌");
+  }, 1800);
 });
 
 document.getElementById('restartLink').addEventListener('click', () => {
@@ -960,7 +963,7 @@ document.getElementById('downloadImgBtn').addEventListener('click', async () => 
     document.body.appendChild(a);
     a.click();
     a.remove();
-    setBubble("saved! now send that picture to me on Instagram, Riri 📸💌");
+    setBubble("saved! sending it my way? 💌");
   }catch(err){
     setBubble("hmm, the image didn't save &mdash; try again? 🐾");
   }
