@@ -647,7 +647,7 @@
     </div>
     <div class="ig-row" id="igRow" style="display:none;">
       <button class="btn ig" id="sendIgBtn">Send to Nic 📩</button>
-      <p class="ig-note">opens your phone's share sheet &mdash; pick Instagram to send it straight to Nic, no login needed</p>
+      <p class="ig-note">copies the schedule, then opens a DM to Nic on Instagram &mdash; just paste &amp; send</p>
     </div>
     <span class="back-link" id="restartLink">start over</span>
   </div>
@@ -886,8 +886,8 @@ document.getElementById('restartLink').addEventListener('click', () => {
   showPanel(0);
 });
 
-// ---- Instagram share handoff ----
-// Fallback deep link only used on devices without native share support (e.g. desktop browsers).
+// ---- Instagram DM handoff ----
+// Edit this to your actual Instagram username so the button opens a DM to you.
 const NIC_IG_USERNAME = "your_ig_username";
 
 document.getElementById('sendIgBtn').addEventListener('click', async () => {
@@ -899,26 +899,14 @@ ${t.emoji} ${t.name}
 🕒 ${chosenTime}
 — sent from your cat's website 💌`;
 
-  wave();
-
-  if(navigator.share){
-    try{
-      await navigator.share({ text: message });
-      setBubble("sent! 💌");
-    }catch(err){
-      // she backed out of the share sheet — no error needed
-    }
-    return;
-  }
-
-  // Desktop fallback: no native share sheet available
   try{
     await navigator.clipboard.writeText(message);
     setBubble("copied! opening Instagram &mdash; just paste it in 📩");
   }catch(e){
     setBubble("opening Instagram &mdash; here's the message to paste:<span class='sub'>" + message.replace(/\n/g,' · ') + "</span>");
   }
-  window.open(`https://ig.me/m/${nxclaus}`, '_blank');
+  wave();
+  window.open(`https://ig.me/m/${NIC_IG_USERNAME}`, '_blank');
 });
 
 // ---- idle autonomous cat movement ----
