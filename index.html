@@ -480,18 +480,16 @@
     max-width:280px;
   }
 
-  /* off-screen card used only to render the downloadable image */
+  /* visible, screenshot-friendly schedule card */
   .export-card{
-    position:fixed;
-    left:-9999px;
-    top:0;
-    width:420px;
-    padding:36px 30px;
+    width:100%;
+    padding:30px 24px;
     background:linear-gradient(160deg, #FFF7EC 0%, #FBEDDA 100%);
-    border-radius:28px;
+    border-radius:24px;
     text-align:center;
     font-family:'Nunito', sans-serif;
     color:#3A2C30;
+    margin-bottom:16px;
   }
   .export-card .ec-emoji{
     font-size:2.6rem;
@@ -499,7 +497,7 @@
   }
   .export-card h2{
     font-family:'Fredoka', sans-serif;
-    font-size:1.4rem;
+    font-size:1.3rem;
     color:#C97B72;
     margin:0 0 18px;
   }
@@ -550,7 +548,6 @@
     .cat-wrap svg, .tail, .eye, .paw-right{ animation:none !important; }
   }
 </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
 
@@ -686,18 +683,21 @@
       <button class="btn primary" id="celebrateBtn">can't wait 🎀</button>
     </div>
     <div class="ig-row" id="igRow" style="display:none;">
-      <button class="btn ig" id="downloadImgBtn">download image 📸</button>
-      <p class="ig-note" id="igNote">saves a picture of your schedule &mdash; send it to Nic on Instagram once it's downloaded</p>
+      <button class="btn ig" id="viewScheduleBtn">view schedule to screenshot 📸</button>
+      <p class="ig-note" id="igNote">opens a clean page you can screenshot and send to Nic on Instagram</p>
     </div>
+    <span class="back-link" id="restartLink">start over</span>
+  </div>
 
-    <!-- hidden card used only for generating the downloadable image -->
+  <!-- STAGE 6: screenshot-friendly schedule view -->
+  <div class="panel" id="panel-6">
     <div class="export-card" id="exportCard">
       <div class="ec-emoji">🐾</div>
       <h2>our date, officially set!</h2>
       <div class="ec-row" id="exportRow"></div>
       <div class="ec-footer">from Riri, Nic's favorite sleepy girl 💗</div>
     </div>
-    <span class="back-link" id="restartLink">start over</span>
+    <span class="back-link" id="backFromScreenshotLink">back to details</span>
   </div>
 </div>
 
@@ -916,7 +916,7 @@ document.getElementById('celebrateBtn').addEventListener('click', () => {
   setBubble("counting down already 🐾💗");
   launchConfetti();
   setTimeout(() => {
-    setBubble("one last thing &mdash; download the picture below and send it to me on Instagram, Riri! 📸💌");
+    setBubble("one last thing &mdash; tap below to view it, then screenshot it and send it to me on Instagram, Riri! 📸💌");
   }, 1800);
 });
 
@@ -937,12 +937,11 @@ document.getElementById('restartLink').addEventListener('click', () => {
   showPanel(0);
 });
 
-// ---- Instagram file share handoff ----
-// Note: my account is private, so ig.me deep links don't reliably open a DM thread.
-// The share-sheet path (below) still works fine since she picks Instagram herself.
+// ---- Instagram screenshot handoff ----
+// In-app browsers (Instagram, Messenger, etc.) commonly block file downloads,
+// so instead of downloading an image, we show a clean full-screen card she can screenshot.
 
-// ---- schedule image download ----
-document.getElementById('downloadImgBtn').addEventListener('click', async () => {
+document.getElementById('viewScheduleBtn').addEventListener('click', () => {
   const t = typeLabels[chosenType];
   document.getElementById('exportRow').innerHTML =
     `${t.emoji} <b>${t.name}</b><br>` +
@@ -951,22 +950,13 @@ document.getElementById('downloadImgBtn').addEventListener('click', async () => 
     `👤 just us two`;
 
   wave();
-  setBubble("making it pretty for you 🎨");
+  showPanel(6);
+  setBubble("screenshot this page and send it to me on Instagram, Riri! 📸💌");
+});
 
-  const exportCard = document.getElementById('exportCard');
-  try{
-    const canvas = await html2canvas(exportCard, { backgroundColor: null, scale: 2 });
-    const dataUrl = canvas.toDataURL('image/png');
-    const a = document.createElement('a');
-    a.href = dataUrl;
-    a.download = 'our-date-schedule.png';
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    setBubble("saved! sending it my way? 💌");
-  }catch(err){
-    setBubble("hmm, the image didn't save &mdash; try again? 🐾");
-  }
+document.getElementById('backFromScreenshotLink').addEventListener('click', () => {
+  showPanel(5);
+  setBubble("all set whenever you're ready 💌");
 });
 
 // ---- idle autonomous cat movement ----
