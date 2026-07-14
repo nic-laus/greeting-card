@@ -724,6 +724,17 @@ document.getElementById('startBtn').addEventListener('click', (e) => {
   if(btn.disabled) return;
   btn.disabled = true;
   waveLong();
+
+  if(!musicPlaying){
+    bgMusic.play().then(() => {
+      musicToggle.textContent = '🔊';
+      musicToggle.classList.add('playing');
+      musicPlaying = true;
+    }).catch(() => {
+      // file missing or blocked — the toggle button remains available as a manual fallback
+    });
+  }
+
   setBubble("wake up, sleeping beauty 😴✨<span class='sub'>I have something to ask you...</span>");
   hint.textContent = "";
   setTimeout(() => {
