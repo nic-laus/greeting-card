@@ -480,6 +480,45 @@
     max-width:280px;
   }
 
+  /* off-screen card used only to render the downloadable image */
+  .export-card{
+    position:fixed;
+    left:-9999px;
+    top:0;
+    width:420px;
+    padding:36px 30px;
+    background:linear-gradient(160deg, #FFF7EC 0%, #FBEDDA 100%);
+    border-radius:28px;
+    text-align:center;
+    font-family:'Nunito', sans-serif;
+    color:#3A2C30;
+  }
+  .export-card .ec-emoji{
+    font-size:2.6rem;
+    margin-bottom:8px;
+  }
+  .export-card h2{
+    font-family:'Fredoka', sans-serif;
+    font-size:1.4rem;
+    color:#C97B72;
+    margin:0 0 18px;
+  }
+  .export-card .ec-row{
+    text-align:left;
+    background:#fff;
+    border-radius:18px;
+    padding:18px 20px;
+    font-size:1rem;
+    line-height:2;
+  }
+  .export-card .ec-row b{ color:#C97B72; }
+  .export-card .ec-footer{
+    margin-top:18px;
+    font-size:0.85rem;
+    color:#B79A8C;
+    font-style:italic;
+  }
+
   .music-toggle{
     position:absolute;
     top:14px;
@@ -511,6 +550,7 @@
     .cat-wrap svg, .tail, .eye, .paw-right{ animation:none !important; }
   }
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
 
@@ -646,8 +686,16 @@
       <button class="btn primary" id="celebrateBtn">can't wait 🎀</button>
     </div>
     <div class="ig-row" id="igRow" style="display:none;">
-      <button class="btn ig" id="sendIgBtn">Send to Nic 📩</button>
-      <p class="ig-note">copies the schedule, then opens a DM to Nic on Instagram &mdash; just paste &amp; send</p>
+      <button class="btn ig" id="downloadImgBtn">download image 📸</button>
+      <p class="ig-note" id="igNote">saves a picture of your schedule &mdash; send it to Nic on Instagram once it's downloaded</p>
+    </div>
+
+    <!-- hidden card used only for generating the downloadable image -->
+    <div class="export-card" id="exportCard">
+      <div class="ec-emoji">🐾</div>
+      <h2>our date, officially set!</h2>
+      <div class="ec-row" id="exportRow"></div>
+      <div class="ec-footer">from Riri &amp; her favorite CSR 💗</div>
     </div>
     <span class="back-link" id="restartLink">start over</span>
   </div>
@@ -857,7 +905,7 @@ document.getElementById('confirmTimeBtn').addEventListener('click', () => {
     `📍 ${chosenLoc}<br>` +
     `🕒 ${chosenTime}<br>` +
     `👤 just us two &mdash; my favorite CSR & her sleeping beauty energy`;
-  setBubble("perfect. it's a date, Riri 💌");
+  setBubble("perfect. it's a date, Riri 💌<span class='sub'>tap below to save a picture of it</span>");
   wave();
   showPanel(5);
   document.getElementById('igRow').style.display = 'flex';
@@ -886,27 +934,36 @@ document.getElementById('restartLink').addEventListener('click', () => {
   showPanel(0);
 });
 
-// ---- Instagram DM handoff ----
-// Edit this to your actual Instagram username so the button opens a DM to you.
-const NIC_IG_USERNAME = "your_ig_username";
+// ---- Instagram file share handoff ----
+// Note: my account is private, so ig.me deep links don't reliably open a DM thread.
+// The share-sheet path (below) still works fine since she picks Instagram herself.
 
-document.getElementById('sendIgBtn').addEventListener('click', async () => {
+// ---- schedule image download ----
+document.getElementById('downloadImgBtn').addEventListener('click', async () => {
   const t = typeLabels[chosenType];
-  const message =
-`Hi Nic! Here's our date schedule 🐾
-${t.emoji} ${t.name}
-📍 ${chosenLoc}
-🕒 ${chosenTime}
-— sent from your cat's website 💌`;
+  document.getElementById('exportRow').innerHTML =
+    `${t.emoji} <b>${t.name}</b><br>` +
+    `📍 <b>${chosenLoc}</b><br>` +
+    `🕒 <b>${chosenTime}</b><br>` +
+    `👤 just us two`;
 
-  try{
-    await navigator.clipboard.writeText(message);
-    setBubble("copied! opening Instagram &mdash; just paste it in 📩");
-  }catch(e){
-    setBubble("opening Instagram &mdash; here's the message to paste:<span class='sub'>" + message.replace(/\n/g,' · ') + "</span>");
-  }
   wave();
-  window.open(`https://ig.me/m/${NIC_IG_USERNAME}`, '_blank');
+  setBubble("making it pretty for you 🎨");
+
+  const exportCard = document.getElementById('exportCard');
+  try{
+    const canvas = await html2canvas(exportCard, { backgroundColor: null, scale: 2 });
+    const dataUrl = canvas.toDataURL('image/png');
+    const a = document.createElement('a');
+    a.href = dataUrl;
+    a.download = 'our-date-schedule.png';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setBubble("saved! now send that picture to me on Instagram, Riri 📸💌");
+  }catch(err){
+    setBubble("hmm, the image didn't save &mdash; try again? 🐾");
+  }
 });
 
 // ---- idle autonomous cat movement ----
