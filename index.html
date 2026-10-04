@@ -2,1005 +2,275 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>a question for riri 🐾</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cheer up!</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --cream:#FFF7EC;
-    --cream-deep:#FBEDDA;
-    --rose:#E7A9A0;
-    --rose-deep:#C97B72;
-    --sage:#8FA888;
-    --sage-deep:#71926A;
-    --ink:#3A2C30;
-    --paw:#D8B79A;
+  :root {
+    --bg1: #fff3f6;
+    --bg2: #ffd9e4;
+    --ink: #4a2b3d;
+    --berry: #e0527f;
+    --lavender: #cdb8f5;
+    --font: "Fredoka", "Nunito", "Trebuchet MS", system-ui, sans-serif;
   }
-  *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;}
-  body{
-    min-height:100vh;
-    background:
-      radial-gradient(circle at 15% 20%, #FDEFE0 0%, transparent 45%),
-      radial-gradient(circle at 85% 80%, #F6DCD8 0%, transparent 50%),
-      var(--cream);
-    font-family:'Nunito', sans-serif;
-    color:var(--ink);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    overflow-x:hidden;
-    position:relative;
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: var(--font);
+    color: var(--ink);
+    background: radial-gradient(circle at 50% 30%, var(--bg1), var(--bg2));
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: env(safe-area-inset-top, 0) 16px env(safe-area-inset-bottom, 0);
+    overflow: hidden;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
   }
 
-  /* floating ambient paw prints */
-  .paw-bg{
-    position:fixed;
-    inset:0;
-    pointer-events:none;
-    z-index:0;
+  .bubble {
+    position: relative;
+    max-width: min(88vw, 360px);
+    min-height: 4.2em;
+    display: flex; align-items: center; justify-content: center;
+    padding: 16px 22px;
+    background: #fff;
+    border: 3px solid var(--ink);
+    border-radius: 28px;
+    font-size: clamp(1.25rem, 5.5vw, 1.7rem);
+    font-weight: 600;
+    line-height: 1.25;
+    text-align: center;
+    margin-bottom: 22px;
   }
-  .paw-bg span{
-    position:absolute;
-    font-size:22px;
-    opacity:0.16;
-    color:var(--rose-deep);
-    animation:drift 14s linear infinite;
+  .bubble::after {
+    content: ""; position: absolute; left: 50%; bottom: -17px;
+    width: 26px; height: 26px; background: #fff;
+    border-right: 3px solid var(--ink); border-bottom: 3px solid var(--ink);
+    transform: translateX(-50%) rotate(45deg);
   }
-  @keyframes drift{
-    0%{ transform:translateY(0) rotate(0deg); opacity:0.16;}
-    100%{ transform:translateY(-120vh) rotate(25deg); opacity:0;}
-  }
+  .bubble.pop { animation: pop .35s ease; }
+  @keyframes pop { 0% { transform: scale(.92); } 60% { transform: scale(1.04); } 100% { transform: scale(1); } }
 
-  .stage{
-    position:relative;
-    z-index:1;
-    width:min(480px, 92vw);
-    background:#fff;
-    border-radius:32px;
-    padding:36px 28px 32px;
-    box-shadow:0 20px 60px rgba(120, 80, 70, 0.18), 0 2px 8px rgba(120,80,70,0.08);
-    text-align:center;
-    border:2px solid var(--cream-deep);
+  button.kitty {
+    background: none; border: 0; padding: 0; cursor: pointer;
+    width: min(70vw, 300px);
+    animation: bob 3s ease-in-out infinite;
   }
+  button.kitty:focus-visible { outline: 3px dashed var(--berry); outline-offset: 8px; border-radius: 24px; }
+  button.kitty.hop { animation: hop .5s ease; }
+  button.kitty svg { width: 100%; height: auto; display: block; overflow: visible; }
+  /* Your own picture: save it next to this file as kitty.png */
+  button.kitty img { display: none; width: 100%; height: auto; mix-blend-mode: multiply; pointer-events: none; }
+  button.kitty.useimg { background: #fff; border: 3px solid var(--ink); border-radius: 36px; padding: 10px; overflow: hidden; }
+  button.kitty.useimg img { display: block; }
+  button.kitty.useimg svg { display: none; }
+  @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+  @keyframes hop { 0% { transform: translateY(0); } 35% { transform: translateY(-34px) rotate(-3deg); } 70% { transform: translateY(0) rotate(2deg); } 100% { transform: none; } }
 
-  h1.title{
-    font-family:'Fredoka', sans-serif;
-    font-size:1.5rem;
-    font-weight:600;
-    color:var(--rose-deep);
-    margin:4px 0 22px;
-    letter-spacing:0.2px;
-  }
+  /* bouquet appears on first tap */
+  #bouquet { transform-box: fill-box; transform-origin: 50% 100%; transform: scale(0); opacity: 0; transition: transform .6s cubic-bezier(.3,1.6,.5,1), opacity .3s; }
+  .given #bouquet { transform: scale(1); opacity: 1; }
+  .blink { animation: blink 4s infinite; transform-box: fill-box; transform-origin: center; }
+  @keyframes blink { 0%, 94%, 100% { transform: scaleY(1); } 97% { transform: scaleY(.1); } }
 
-  /* CAT */
-  .cat-wrap{
-    width:190px;
-    margin:0 auto 6px;
-    cursor:pointer;
-    user-select:none;
-    -webkit-tap-highlight-color:transparent;
-  }
-  .cat-wrap svg{
-    width:100%;
-    display:block;
-    animation:breathe 3.2s ease-in-out infinite;
-    transform-origin:center bottom;
-  }
-  @keyframes breathe{
-    0%,100%{ transform:translateY(0) scale(1);}
-    50%{ transform:translateY(-3px) scale(1.015);}
-  }
-  .cat-wrap.jump svg{ animation:cat-jump 0.7s cubic-bezier(0.34, 1.56, 0.64, 1); }
-  @keyframes cat-jump{
-    0%{ transform:translateY(0) scaleY(1) scaleX(1);}
-    15%{ transform:translateY(6px) scaleY(0.85) scaleX(1.1);}
-    45%{ transform:translateY(-38px) scaleY(1.08) scaleX(0.95);}
-    70%{ transform:translateY(0) scaleY(0.9) scaleX(1.08);}
-    85%{ transform:translateY(-6px) scaleY(1.03) scaleX(0.98);}
-    100%{ transform:translateY(0) scaleY(1) scaleX(1);}
-  }
-  .cat-wrap.jump .tail{ animation:tail-happy 0.35s ease-in-out infinite; }
-  .cat-wrap.wave svg{ animation:wave-jump 0.6s ease-in-out; }
-  @keyframes wave-jump{
-    0%{ transform:translateY(0) rotate(0deg);}
-    30%{ transform:translateY(-14px) rotate(-4deg);}
-    60%{ transform:translateY(0) rotate(3deg);}
-    100%{ transform:translateY(0) rotate(0deg);}
-  }
+  .hint { margin-top: 18px; font-size: 1rem; opacity: .65; transition: opacity .4s; }
+  .given .hint { opacity: 0; }
 
-  .cat-wrap.wave-long svg{ animation:sway-gentle 2s ease-in-out; }
-  @keyframes sway-gentle{
-    0%,100%{ transform:translateY(0) rotate(0deg);}
-    50%{ transform:translateY(-4px) rotate(2deg);}
+  .fall, .float {
+    position: fixed; pointer-events: none; z-index: 10; will-change: transform, opacity;
   }
-  .cat-wrap.wave-long .paw-right{
-    animation:paw-wave-loop 2s ease-in-out;
-  }
-  @keyframes paw-wave-loop{
-    0%,100%{ transform:rotate(0deg);}
-    12%{ transform:rotate(-32deg);}
-    24%{ transform:rotate(-8deg);}
-    36%{ transform:rotate(-30deg);}
-    48%{ transform:rotate(-8deg);}
-    60%{ transform:rotate(-30deg);}
-    72%{ transform:rotate(-8deg);}
-    84%{ transform:rotate(-20deg);}
-  }
-  .cat-wrap.wave-long .tail{
-    animation:tailsway 0.9s ease-in-out infinite;
-  }
+  .fall { top: -40px; animation: fall linear forwards; }
+  @keyframes fall { to { transform: translate(var(--dx), 110vh) rotate(var(--rot)); } }
+  .float { animation: rise 1.6s ease-out forwards; }
+  @keyframes rise { to { transform: translate(var(--dx), -140px) scale(1.3); opacity: 0; } }
 
-  .cat-wrap.celebrate svg{ animation:celebrate-jump 2.2s ease-in-out; }
-  @keyframes celebrate-jump{
-    0%{ transform:translateY(0) rotate(0deg) scale(1);}
-    10%{ transform:translateY(-26px) rotate(-10deg) scale(1.08);}
-    20%{ transform:translateY(-4px) rotate(8deg) scale(1.03);}
-    30%{ transform:translateY(-22px) rotate(-8deg) scale(1.08);}
-    40%{ transform:translateY(0) rotate(6deg) scale(1.02);}
-    50%{ transform:translateY(-20px) rotate(-9deg) scale(1.07);}
-    60%{ transform:translateY(-2px) rotate(7deg) scale(1.02);}
-    70%{ transform:translateY(-14px) rotate(-5deg) scale(1.05);}
-    82%{ transform:translateY(0) rotate(4deg) scale(1.01);}
-    100%{ transform:translateY(0) rotate(0deg) scale(1);}
+  .music {
+    position: fixed; top: calc(env(safe-area-inset-top, 0px) + 14px); right: 14px; z-index: 20;
+    width: 46px; height: 46px; border-radius: 50%;
+    background: #fff; border: 3px solid var(--ink);
+    font-size: 1.3rem; line-height: 1; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
   }
-  .cat-wrap.celebrate .tail{ animation:tail-happy 0.5s ease-in-out infinite; }
-  @keyframes tail-happy{
-    0%,100%{ transform:rotate(-14deg);}
-    50%{ transform:rotate(20deg);}
-  }
+  .music[hidden] { display: none; }
 
-  .heart-burst{
-    position:fixed;
-    z-index:6;
-    pointer-events:none;
-    font-size:1.3rem;
-    animation:heart-float 2.6s ease-out forwards;
-  }
-  @keyframes heart-float{
-    0%{ transform:translateY(0) scale(0.6); opacity:0;}
-    12%{ opacity:1; transform:translateY(-12px) scale(1.15);}
-    80%{ opacity:1;}
-    100%{ transform:translateY(-160px) scale(0.9); opacity:0;}
-  }
-
-  /* idle autonomous movement */
-  .cat-wrap.idle-look-left svg{ animation:look-left 1.4s ease-in-out; }
-  .cat-wrap.idle-look-right svg{ animation:look-right 1.4s ease-in-out; }
-  .cat-wrap.idle-stretch svg{ animation:stretch 1.6s ease-in-out; }
-  .cat-wrap.idle-tilt svg{ animation:tilt 1.8s ease-in-out; }
-  @keyframes look-left{
-    0%,100%{ transform:rotate(0deg) translateX(0);}
-    50%{ transform:rotate(-6deg) translateX(-6px);}
-  }
-  @keyframes look-right{
-    0%,100%{ transform:rotate(0deg) translateX(0);}
-    50%{ transform:rotate(6deg) translateX(6px);}
-  }
-  @keyframes stretch{
-    0%,100%{ transform:scale(1,1);}
-    40%{ transform:scale(1.08,0.92) translateY(4px);}
-    70%{ transform:scale(0.96,1.06) translateY(-3px);}
-  }
-  @keyframes tilt{
-    0%,100%{ transform:rotate(0deg);}
-    50%{ transform:rotate(9deg);}
-  }
-  .cat-wrap.idle-look-left .tail,
-  .cat-wrap.idle-look-right .tail{ animation-duration:1s; }
-
-  .tail{ transform-origin:85% 90%; animation:tailsway 2.6s ease-in-out infinite; }
-  @keyframes tailsway{
-    0%,100%{ transform:rotate(0deg);}
-    50%{ transform:rotate(10deg);}
-  }
-  .eye{ animation:blink 4.5s infinite; transform-origin:center; transition:transform 0.3s ease; }
-  .eye.right{ animation-delay:0.05s; }
-  @keyframes blink{
-    0%,92%,100%{ transform:scaleY(1);}
-    95%{ transform:scaleY(0.1);}
-  }
-
-  /* cute eyes for the "asking" moment */
-  .cat-wrap.asking .eye{
-    animation:blink-cute 5.5s infinite;
-    transform:scale(1.25);
-  }
-  @keyframes blink-cute{
-    0%,90%,100%{ transform:scale(1.25) scaleY(1);}
-    94%{ transform:scale(1.25) scaleY(0.15);}
-  }
-  .sparkle{
-    opacity:0;
-    transition:opacity 0.3s ease;
-  }
-  .cat-wrap.asking .sparkle{
-    opacity:1;
-    animation:twinkle 1.6s ease-in-out infinite;
-  }
-  @keyframes twinkle{
-    0%,100%{ opacity:1; transform:scale(1);}
-    50%{ opacity:0.5; transform:scale(0.7);}
-  }
-  .lash{
-    opacity:0;
-    transition:opacity 0.3s ease;
-  }
-  .cat-wrap.asking .lash{ opacity:1; }
-  .cat-wrap.asking .cheek{ opacity:0.8; }
-  .paw-right{
-    transform-origin:60% 20%;
-  }
-  .cat-wrap.wave .paw-right{
-    animation:paw-wave 0.6s ease-in-out;
-  }
-  @keyframes paw-wave{
-    0%,100%{ transform:rotate(0deg);}
-    25%{ transform:rotate(-30deg);}
-    50%{ transform:rotate(-10deg);}
-    75%{ transform:rotate(-25deg);}
-  }
-  .cheek{ opacity:0.55; }
-
-  .hint{
-    font-size:0.78rem;
-    color:#B79A8C;
-    margin-top:2px;
-    margin-bottom:18px;
-    font-style:italic;
-  }
-
-  /* speech bubble */
-  .bubble{
-    background:var(--cream-deep);
-    border-radius:20px;
-    padding:16px 18px;
-    position:relative;
-    margin-bottom:22px;
-    min-height:60px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    transition:opacity 0.25s ease;
-  }
-  .bubble::before{
-    content:'';
-    position:absolute;
-    top:-9px;
-    left:50%;
-    transform:translateX(-50%);
-    border-width:0 9px 10px 9px;
-    border-style:solid;
-    border-color:transparent transparent var(--cream-deep) transparent;
-  }
-  .bubble p{
-    margin:0;
-    font-size:1rem;
-    line-height:1.5;
-    font-weight:600;
-  }
-  .bubble .sub{
-    display:block;
-    font-weight:400;
-    font-size:0.85rem;
-    color:#8a716a;
-    margin-top:4px;
-  }
-
-  /* stages */
-  .panel{ display:none; }
-  .panel.active{ display:block; animation:fadein 0.35s ease; }
-  @keyframes fadein{
-    from{ opacity:0; transform:translateY(6px);}
-    to{ opacity:1; transform:translateY(0);}
-  }
-
-  .btn{
-    font-family:'Fredoka', sans-serif;
-    border:none;
-    border-radius:999px;
-    padding:13px 28px;
-    font-size:1rem;
-    font-weight:600;
-    cursor:pointer;
-    transition:transform 0.15s ease, box-shadow 0.15s ease;
-    box-shadow:0 6px 16px rgba(201,123,114,0.28);
-  }
-  .btn.primary{
-    background:var(--rose-deep);
-    color:#fff;
-  }
-  .btn.primary:hover{ transform:translateY(-2px) scale(1.03); box-shadow:0 10px 22px rgba(201,123,114,0.38); }
-  .btn.primary:active{ transform:translateY(0) scale(0.98); }
-  .btn:disabled{
-    opacity:0.55;
-    cursor:default;
-    transform:none !important;
-    box-shadow:0 4px 10px rgba(201,123,114,0.18) !important;
-  }
-
-  /* option cards */
-  .options{
-    display:flex;
-    flex-direction:column;
-    gap:12px;
-    margin-bottom:18px;
-  }
-  .option{
-    display:flex;
-    align-items:center;
-    gap:14px;
-    text-align:left;
-    background:#FFFDFA;
-    border:2px solid var(--cream-deep);
-    border-radius:18px;
-    padding:14px 16px;
-    cursor:pointer;
-    transition:border-color 0.18s ease, transform 0.18s ease, background 0.18s ease;
-    font-family:'Nunito', sans-serif;
-  }
-  .option:hover{
-    border-color:var(--rose);
-    background:#FFF6F1;
-    transform:translateX(3px);
-  }
-  .option.selected{
-    border-color:var(--rose-deep);
-    background:#FDEFEA;
-  }
-  .option .emoji{ font-size:1.7rem; flex-shrink:0; }
-  .option .details{ flex:1; }
-  .option .name{
-    font-family:'Fredoka', sans-serif;
-    font-weight:600;
-    font-size:1.02rem;
-    color:var(--ink);
-    margin-bottom:2px;
-  }
-  .option .meta{
-    font-size:0.82rem;
-    color:#8a716a;
-  }
-  .option .meta b{ color:var(--rose-deep); }
-
-  .location-row{
-    display:flex;
-    gap:8px;
-    margin-top:16px;
-  }
-  .loc-btn{
-    flex:1;
-    font-family:'Nunito', sans-serif;
-    font-weight:700;
-    font-size:0.85rem;
-    padding:11px 8px;
-    border-radius:14px;
-    border:2px solid var(--cream-deep);
-    background:#fff;
-    cursor:pointer;
-    transition:all 0.15s ease;
-  }
-  .loc-btn:hover{ border-color:var(--sage); background:#F3F7F1; }
-  .loc-btn.selected{ border-color:var(--sage-deep); background:#EAF1E6; }
-
-  .summary{
-    background:var(--cream-deep);
-    border-radius:16px;
-    padding:14px 16px;
-    font-size:0.9rem;
-    margin:14px 0 6px;
-    text-align:left;
-    line-height:1.6;
-  }
-  .summary b{ color:var(--rose-deep); }
-
-  .final-actions{
-    display:flex;
-    gap:10px;
-    justify-content:center;
-    margin-top:10px;
-  }
-
-  .confetti-piece{
-    position:fixed;
-    top:-20px;
-    z-index:5;
-    pointer-events:none;
-    font-size:1.3rem;
-    animation:fall linear forwards;
-  }
-  @keyframes fall{
-    to{ transform:translateY(105vh) rotate(360deg); opacity:0.9; }
-  }
-
-  .back-link{
-    display:inline-block;
-    margin-top:14px;
-    font-size:0.8rem;
-    color:#B79A8C;
-    cursor:pointer;
-    text-decoration:underline;
-  }
-
-  .time-grid{
-    display:flex;
-    flex-wrap:wrap;
-    gap:10px;
-    justify-content:center;
-  }
-  .time-chip{
-    font-family:'Fredoka', sans-serif;
-    font-weight:600;
-    font-size:0.9rem;
-    padding:10px 16px;
-    border-radius:999px;
-    border:2px solid var(--cream-deep);
-    background:#fff;
-    cursor:pointer;
-    transition:all 0.15s ease;
-  }
-  .time-chip:hover{ border-color:var(--rose); background:#FFF6F1; }
-  .time-chip.selected{ border-color:var(--rose-deep); background:#FDEFEA; color:var(--rose-deep); }
-
-  .custom-time-row{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:10px;
-    margin-top:16px;
-  }
-  .or-text{ font-size:0.82rem; color:#B79A8C; }
-  .time-input{
-    font-family:'Nunito', sans-serif;
-    font-size:0.9rem;
-    padding:8px 10px;
-    border-radius:12px;
-    border:2px solid var(--cream-deep);
-    background:#fff;
-    cursor:pointer;
-  }
-
-  .btn.ig{
-    background:linear-gradient(135deg, #E7A9A0, #C97B72 60%, #a85a86);
-    color:#fff;
-  }
-  .btn.ig:hover{ transform:translateY(-2px) scale(1.03); }
-  .ig-row{
-    margin-top:14px;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:8px;
-  }
-  .ig-note{
-    font-size:0.75rem;
-    color:#B79A8C;
-    margin:0;
-    max-width:280px;
-  }
-
-  /* visible, screenshot-friendly schedule card */
-  .export-card{
-    width:100%;
-    padding:30px 24px;
-    background:linear-gradient(160deg, #FFF7EC 0%, #FBEDDA 100%);
-    border-radius:24px;
-    text-align:center;
-    font-family:'Nunito', sans-serif;
-    color:#3A2C30;
-    margin-bottom:16px;
-  }
-  .export-card .ec-emoji{
-    font-size:2.6rem;
-    margin-bottom:8px;
-  }
-  .export-card h2{
-    font-family:'Fredoka', sans-serif;
-    font-size:1.3rem;
-    color:#C97B72;
-    margin:0 0 18px;
-  }
-  .export-card .ec-row{
-    text-align:left;
-    background:#fff;
-    border-radius:18px;
-    padding:18px 20px;
-    font-size:1rem;
-    line-height:2;
-  }
-  .export-card .ec-row b{ color:#C97B72; }
-  .export-card .ec-footer{
-    margin-top:18px;
-    font-size:0.85rem;
-    color:#B79A8C;
-    font-style:italic;
-  }
-
-  .music-toggle{
-    position:absolute;
-    top:14px;
-    right:14px;
-    width:38px;
-    height:38px;
-    border-radius:50%;
-    border:2px solid var(--cream-deep);
-    background:#fff;
-    font-size:1.1rem;
-    cursor:pointer;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    transition:all 0.15s ease;
-    z-index:2;
-  }
-  .music-toggle:hover{ border-color:var(--rose); transform:scale(1.06); }
-  .music-toggle.playing{
-    border-color:var(--sage-deep);
-    animation:music-pulse 1.4s ease-in-out infinite;
-  }
-  @keyframes music-pulse{
-    0%,100%{ box-shadow:0 0 0 0 rgba(143,168,136,0.35); }
-    50%{ box-shadow:0 0 0 6px rgba(143,168,136,0); }
-  }
-
-  @media (prefers-reduced-motion: reduce){
-    .cat-wrap svg, .tail, .eye, .paw-right{ animation:none !important; }
+  @media (prefers-reduced-motion: reduce) {
+    button.kitty, .blink { animation: none; }
+    .fall, .float { display: none; }
   }
 </style>
 </head>
 <body>
 
-<div class="paw-bg" id="pawBg"></div>
+<div class="bubble" id="bubble" aria-live="polite"></div>
 
-<div class="stage">
-  <button class="music-toggle" id="musicToggle" aria-label="play music" title="play music">🎵</button>
-  <audio id="bgMusic" loop preload="none">
-    <source src="song.mp3" type="audio/mpeg">
-  </audio>
-  <h1 class="title">helloo, i have a question... 🐾</h1>
+<button class="kitty" id="kitty" aria-label="Tap the kitty">
+  <img id="kittyImg" src="kitty.png" alt="Kitty holding flowers">
+  <svg viewBox="0 0 300 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A cute white kitty with a pink flower on her ear">
+    <defs>
+      <g id="flower">
+        <circle cx="0" cy="-11" r="9"/><circle cx="10.5" cy="-3.4" r="9"/>
+        <circle cx="6.5" cy="9" r="9"/><circle cx="-6.5" cy="9" r="9"/>
+        <circle cx="-10.5" cy="-3.4" r="9"/>
+        <circle cx="0" cy="0" r="6" fill="#ffd34d"/>
+      </g>
+    </defs>
 
-  <div class="cat-wrap" id="catWrap" title="pet the cat">
-    <svg viewBox="0 0 200 190" xmlns="http://www.w3.org/2000/svg">
-      <!-- tail -->
-      <path class="tail" d="M165 140 Q195 130 185 95 Q180 80 165 90" fill="none" stroke="#E8B98F" stroke-width="14" stroke-linecap="round"/>
-      <!-- body -->
-      <ellipse cx="100" cy="150" rx="55" ry="34" fill="#F3CFA0"/>
-      <!-- head -->
-      <circle cx="100" cy="95" r="52" fill="#F6D9AE"/>
-      <!-- ears -->
-      <path d="M58 60 L48 20 L88 52 Z" fill="#F6D9AE"/>
-      <path d="M142 60 L152 20 L112 52 Z" fill="#F6D9AE"/>
-      <path d="M63 52 L57 30 L80 50 Z" fill="#EFAFA4"/>
-      <path d="M137 52 L143 30 L120 50 Z" fill="#EFAFA4"/>
-      <!-- stripes -->
-      <path d="M70 45 L75 58" stroke="#E8B98F" stroke-width="4" stroke-linecap="round"/>
-      <path d="M130 45 L125 58" stroke="#E8B98F" stroke-width="4" stroke-linecap="round"/>
-      <!-- cheeks -->
-      <ellipse class="cheek" cx="66" cy="105" rx="12" ry="8" fill="#F2A79E"/>
-      <ellipse class="cheek" cx="134" cy="105" rx="12" ry="8" fill="#F2A79E"/>
-      <!-- eyes -->
-      <ellipse class="eye left" cx="82" cy="92" rx="7" ry="9" fill="#3A2C30"/>
-      <ellipse class="eye right" cx="118" cy="92" rx="7" ry="9" fill="#3A2C30"/>
-      <circle cx="84" cy="89" r="2" fill="#fff"/>
-      <circle cx="120" cy="89" r="2" fill="#fff"/>
-      <circle class="sparkle" cx="79" cy="95" r="1.6" fill="#fff"/>
-      <circle class="sparkle" cx="115" cy="95" r="1.6" fill="#fff"/>
-      <path class="lash" d="M76 84 L72 80" stroke="#3A2C30" stroke-width="1.6" stroke-linecap="round"/>
-      <path class="lash" d="M82 82 L80 77" stroke="#3A2C30" stroke-width="1.6" stroke-linecap="round"/>
-      <path class="lash" d="M124 84 L128 80" stroke="#3A2C30" stroke-width="1.6" stroke-linecap="round"/>
-      <path class="lash" d="M118 82 L120 77" stroke="#3A2C30" stroke-width="1.6" stroke-linecap="round"/>
-      <!-- nose + mouth -->
-      <path d="M96 105 L104 105 L100 111 Z" fill="#D98B7E"/>
-      <path d="M100 111 Q100 116 92 117" fill="none" stroke="#3A2C30" stroke-width="2.5" stroke-linecap="round"/>
-      <path d="M100 111 Q100 116 108 117" fill="none" stroke="#3A2C30" stroke-width="2.5" stroke-linecap="round"/>
-      <!-- whiskers -->
-      <path d="M40 100 L68 102" stroke="#C9A879" stroke-width="2"/>
-      <path d="M40 112 L68 110" stroke="#C9A879" stroke-width="2"/>
-      <path d="M160 100 L132 102" stroke="#C9A879" stroke-width="2"/>
-      <path d="M160 112 L132 110" stroke="#C9A879" stroke-width="2"/>
-      <!-- waving paw -->
-      <ellipse class="paw-right" cx="148" cy="128" rx="15" ry="17" fill="#F6D9AE"/>
-      <!-- other paw -->
-      <ellipse cx="60" cy="168" rx="16" ry="12" fill="#F3CFA0"/>
-      <ellipse cx="140" cy="168" rx="16" ry="12" fill="#F3CFA0"/>
-    </svg>
-  </div>
-  <div class="hint" id="hint">tap the cat</div>
+    <!-- dress -->
+    <ellipse cx="150" cy="275" rx="62" ry="56" fill="#cdb8f5" stroke="#4a2b3d" stroke-width="3"/>
+    <!-- ears -->
+    <path d="M68 125 L60 58 Q96 66 120 98 Z" fill="#fff" stroke="#4a2b3d" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M232 125 L240 58 Q204 66 180 98 Z" fill="#fff" stroke="#4a2b3d" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M76 112 L72 80 Q90 86 104 102 Z" fill="#ffc2d4"/>
+    <path d="M224 112 L228 80 Q210 86 196 102 Z" fill="#ffc2d4"/>
+    <!-- head -->
+    <ellipse cx="150" cy="168" rx="106" ry="80" fill="#fff" stroke="#4a2b3d" stroke-width="3"/>
+    <!-- flower on ear -->
+    <g transform="translate(222 92) scale(.95)" fill="#ff8fb1" stroke="#4a2b3d" stroke-width="2"><use href="#flower"/></g>
+    <!-- face -->
+    <g class="blink">
+      <ellipse cx="105" cy="170" rx="7" ry="9.5" fill="#4a2b3d"/>
+      <ellipse cx="195" cy="170" rx="7" ry="9.5" fill="#4a2b3d"/>
+      <circle cx="102.5" cy="166" r="2.4" fill="#fff"/><circle cx="192.5" cy="166" r="2.4" fill="#fff"/>
+    </g>
+    <ellipse cx="82" cy="192" rx="15" ry="9" fill="#ff9fba" opacity=".6"/>
+    <ellipse cx="218" cy="192" rx="15" ry="9" fill="#ff9fba" opacity=".6"/>
+    <ellipse cx="150" cy="184" rx="8" ry="5.5" fill="#ff7fa3"/>
+    <path d="M139 197 Q144.5 206 150 198 Q155.5 206 161 197" fill="none" stroke="#4a2b3d" stroke-width="3" stroke-linecap="round"/>
+    <g stroke="#4a2b3d" stroke-width="2.5" stroke-linecap="round">
+      <path d="M44 160 L78 167"/><path d="M40 182 L76 182"/><path d="M45 204 L79 197"/>
+      <path d="M256 160 L222 167"/><path d="M260 182 L224 182"/><path d="M255 204 L221 197"/>
+    </g>
 
-  <div class="bubble" id="bubble">
-    <p id="bubbleText"></p>
-  </div>
+    <!-- bouquet -->
+    <g id="bouquet">
+      <g stroke="#5aa86b" stroke-width="4" stroke-linecap="round">
+        <path d="M150 262 L128 236"/><path d="M150 262 L150 222"/><path d="M150 262 L172 236"/>
+      </g>
+      <path d="M118 252 L182 252 L150 318 Z" fill="#ffe3ee" stroke="#4a2b3d" stroke-width="3" stroke-linejoin="round"/>
+      <g stroke="#4a2b3d" stroke-width="2">
+        <g transform="translate(126 232) scale(.85)" fill="#ff8fb1"><use href="#flower"/></g>
+        <g transform="translate(150 216) scale(.95)" fill="#ffffff"><use href="#flower"/></g>
+        <g transform="translate(174 232) scale(.85)" fill="#b79bf0"><use href="#flower"/></g>
+      </g>
+    </g>
 
-  <!-- STAGE 0: intro -->
-  <div class="panel active" id="panel-0">
-    <button class="btn primary" id="startBtn">go on, ask 🐟</button>
-  </div>
+    <!-- paws -->
+    <ellipse cx="108" cy="262" rx="14" ry="11" fill="#fff" stroke="#4a2b3d" stroke-width="3"/>
+    <ellipse cx="192" cy="262" rx="14" ry="11" fill="#fff" stroke="#4a2b3d" stroke-width="3"/>
+  </svg>
+</button>
 
-  <!-- STAGE 1: the question -->
-  <div class="panel" id="panel-1">
-    <button class="btn primary" id="yesBtn">yes, obviously 💗</button>
-  </div>
+<p class="hint">tap the kitty</p>
 
-  <!-- STAGE 2: pick a date type -->
-  <div class="panel" id="panel-2">
-    <div class="options" id="dateOptions">
-      <div class="option" data-type="coffee">
-        <span class="emoji">☕</span>
-        <div class="details">
-          <div class="name">Coffee Date</div>
-          <div class="meta">slow mornings, good conversation, <b>my favorite kind</b></div>
-        </div>
-      </div>
-      <div class="option" data-type="lunch">
-        <span class="emoji">🍜</span>
-        <div class="details">
-          <div class="name">Lunch Date</div>
-          <div class="meta">something proper to eat, no rush</div>
-        </div>
-      </div>
-      <div class="option" data-type="dessert">
-        <span class="emoji">🍰</span>
-        <div class="details">
-          <div class="name">Dessert Date</div>
-          <div class="meta">sweet ending, sweeter company</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- STAGE 3: pick a location -->
-  <div class="panel" id="panel-3">
-    <div class="location-row" id="locOptions">
-      <button class="loc-btn" data-loc="Ayala Malls Manila Bay">Ayala Malls<br>Manila Bay</button>
-      <button class="loc-btn" data-loc="Mall of Asia">Mall of<br>Asia</button>
-    </div>
-    <button class="btn primary" id="confirmLocBtn" style="margin-top:18px; display:none;">lock it in 🐾</button>
-  </div>
-
-  <!-- STAGE 4: pick a time -->
-  <div class="panel" id="panel-4">
-    <div class="options" id="timeOptions">
-      <div class="time-grid">
-        <button class="time-chip" data-time="10:00 AM">10:00 AM</button>
-        <button class="time-chip" data-time="1:00 PM">1:00 PM</button>
-        <button class="time-chip" data-time="3:00 PM">3:00 PM</button>
-        <button class="time-chip" data-time="5:00 PM">5:00 PM</button>
-        <button class="time-chip" data-time="7:00 PM">7:00 PM</button>
-      </div>
-      <div class="custom-time-row">
-        <span class="or-text">or pick exactly:</span>
-        <input type="time" id="customTime" class="time-input">
-      </div>
-    </div>
-    <button class="btn primary" id="confirmTimeBtn" style="margin-top:14px; display:none;">that works 🕒</button>
-  </div>
-
-  <!-- STAGE 5: summary -->
-  <div class="panel" id="panel-5">
-    <div class="summary" id="summaryBox"></div>
-    <div class="final-actions" id="finalActions">
-      <button class="btn primary" id="celebrateBtn">can't wait 🎀</button>
-    </div>
-    <div class="ig-row" id="igRow" style="display:none;">
-      <button class="btn ig" id="viewScheduleBtn">view schedule to screenshot 📸</button>
-      <p class="ig-note" id="igNote">opens a clean page you can screenshot and send to Nic on Instagram</p>
-    </div>
-    <span class="back-link" id="restartLink">start over</span>
-  </div>
-
-  <!-- STAGE 6: screenshot-friendly schedule view -->
-  <div class="panel" id="panel-6">
-    <div class="export-card" id="exportCard">
-      <div class="ec-emoji">🐾</div>
-      <h2>our date, officially set!</h2>
-      <div class="ec-row" id="exportRow"></div>
-      <div class="ec-footer">from Riri, Nic's favorite sleepy girl 💗</div>
-    </div>
-    <span class="back-link" id="backFromScreenshotLink">back to details</span>
-  </div>
-</div>
+<!-- Your song: save it next to this file as song.mp3 -->
+<audio id="song" src="song.mp3" loop preload="auto"></audio>
+<button class="music" id="musicBtn" aria-label="Play music">🔇</button>
 
 <script>
-const catWrap = document.getElementById('catWrap');
-const bubbleText = document.getElementById('bubbleText');
-const hint = document.getElementById('hint');
+  // Her name: edit this, or open the page with ?name=Her%20Name
+  const DEFAULT_NAME = "NAME";
+  const NAME = new URLSearchParams(location.search).get("name") || DEFAULT_NAME;
 
-const panels = document.querySelectorAll('.panel');
-function showPanel(id){
-  panels.forEach(p => p.classList.remove('active'));
-  document.getElementById('panel-'+id).classList.add('active');
-}
+  const messages = [
+    "Friendly reminder: You're doing amazing. Stop overthinking.",
+    "Your brain is lying to you right now. Go drink some water.",
+    "Even when you're stressed, you're still pretty cute.",
+    "System error: Department head needs a nap immediately.",
+    "You're allowed to have bad days, Ms. Manager.",
+    "Okay, stop clicking. Go text me and rant instead."
+  ];
 
-const bubble = document.getElementById('bubble');
-const bgMusic = document.getElementById('bgMusic');
-const musicToggle = document.getElementById('musicToggle');
-let musicPlaying = false;
+  const kitty = document.getElementById("kitty");
+  const kittyImg = document.getElementById("kittyImg");
+  // If kitty.png sits next to this file, use it; otherwise the drawn kitty stays.
+  function checkImg() { if (kittyImg.complete && kittyImg.naturalWidth > 0) kitty.classList.add("useimg"); }
+  kittyImg.addEventListener("load", checkImg);
+  checkImg();
+  const bubble = document.getElementById("bubble");
+  let i = 0;
+  let given = false;
 
-musicToggle.addEventListener('click', () => {
-  if(musicPlaying){
-    bgMusic.pause();
-    musicToggle.textContent = '🎵';
-    musicToggle.classList.remove('playing');
-  } else {
-    bgMusic.play().catch(() => {
-      setBubble("add a music.mp3 file next to this page to hear it 🎵");
-    });
-    musicToggle.textContent = '🔊';
-    musicToggle.classList.add('playing');
-  }
-  musicPlaying = !musicPlaying;
-});
-
-function setBubble(html){
-  bubble.style.opacity = 0;
-  setTimeout(() => {
-    bubbleText.innerHTML = html;
-    bubble.style.opacity = 1;
-  }, 200);
-}
-
-function wave(){
-  catWrap.classList.remove('wave');
-  void catWrap.offsetWidth; // restart animation
-  catWrap.classList.add('wave');
-  setTimeout(()=> catWrap.classList.remove('wave'), 650);
-}
-
-function jump(){
-  catWrap.classList.remove('jump');
-  void catWrap.offsetWidth;
-  catWrap.classList.add('jump');
-  setTimeout(()=> catWrap.classList.remove('jump'), 700);
-}
-
-setBubble("hi Riri 🐈 &mdash; my favorite csr...<span class='sub'>(tap me when you're ready)</span>");
-
-catWrap.addEventListener('click', () => {
-  jump();
-});
-
-function waveLong(){
-  catWrap.classList.remove('wave-long');
-  void catWrap.offsetWidth;
-  catWrap.classList.add('wave-long');
-  setTimeout(()=> catWrap.classList.remove('wave-long'), 2000);
-}
-
-document.getElementById('startBtn').addEventListener('click', (e) => {
-  const btn = e.currentTarget;
-  if(btn.disabled) return;
-  btn.disabled = true;
-  waveLong();
-
-  if(!musicPlaying){
-    bgMusic.play().then(() => {
-      musicToggle.textContent = '🔊';
-      musicToggle.classList.add('playing');
-      musicPlaying = true;
-    }).catch(() => {
-      // file missing or blocked — the toggle button remains available as a manual fallback
-    });
+  function say(text) {
+    bubble.textContent = text;           // textContent keeps the ?name= value safe
+    bubble.classList.remove("pop");
+    void bubble.offsetWidth;             // restart the animation
+    bubble.classList.add("pop");
   }
 
-  setBubble("wake up, sleeping beauty 😴✨<span class='sub'>I have something to ask you...</span>");
-  hint.textContent = "";
-  setTimeout(() => {
-    setBubble("Riri, will you go on a date with me?");
-    catWrap.classList.add('asking');
-    showPanel(1);
-  }, 2000);
-});
-
-document.getElementById('yesBtn').addEventListener('click', (e) => {
-  const btn = e.currentTarget;
-  if(btn.disabled) return;
-  btn.disabled = true;
-  catWrap.classList.remove('asking');
-  celebrateCat();
-  setBubble("yay!! 🎉💕");
-  setTimeout(() => {
-    setBubble("okay okay &mdash; pick what kind of date first 👇");
-    showPanel(2);
-  }, 2100);
-});
-
-function celebrateCat(){
-  catWrap.classList.remove('celebrate');
-  void catWrap.offsetWidth;
-  catWrap.classList.add('celebrate');
-  setTimeout(() => catWrap.classList.remove('celebrate'), 2200);
-
-  const rect = catWrap.getBoundingClientRect();
-  const hearts = ['💗','💕','✨','🎀'];
-  const burstWave = () => {
-    for(let i=0;i<7;i++){
-      const h = document.createElement('div');
-      h.className = 'heart-burst';
-      h.textContent = hearts[Math.floor(Math.random()*hearts.length)];
-      h.style.left = (rect.left + rect.width/2 + (Math.random()*90-45)) + 'px';
-      h.style.top = (rect.top + rect.height*0.3) + 'px';
-      h.style.animationDelay = (Math.random()*0.3)+'s';
-      document.body.appendChild(h);
-      setTimeout(() => h.remove(), 3000);
+  function rain(emojis, count) {
+    for (let n = 0; n < count; n++) {
+      const el = document.createElement("span");
+      el.className = "fall";
+      el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      el.style.left = Math.random() * 100 + "vw";
+      el.style.fontSize = 18 + Math.random() * 18 + "px";
+      el.style.setProperty("--dx", (Math.random() * 120 - 60) + "px");
+      el.style.setProperty("--rot", (Math.random() * 540 - 270) + "deg");
+      el.style.animationDuration = 3 + Math.random() * 3 + "s";
+      el.style.animationDelay = Math.random() * 0.8 + "s";
+      document.body.appendChild(el);
+      el.addEventListener("animationend", () => el.remove());
     }
-  };
-  burstWave();
-  setTimeout(burstWave, 700);
-  setTimeout(burstWave, 1400);
-}
-
-let chosenType = null;
-let chosenLoc = null;
-const typeLabels = {
-  coffee: {emoji:'☕', name:'Coffee Date', line:"good choice &mdash; slow mornings and good talk."},
-  lunch: {emoji:'🍜', name:'Lunch Date', line:"lunch it is &mdash; bring your appetite."},
-  dessert: {emoji:'🍰', name:'Dessert Date', line:"something sweet, to match the company."}
-};
-
-document.querySelectorAll('.option').forEach(opt => {
-  opt.addEventListener('click', () => {
-    document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
-    opt.classList.add('selected');
-    chosenType = opt.dataset.type;
-    wave();
-    const t = typeLabels[chosenType];
-    setBubble(`${t.line}<span class='sub'>now, where should we go?</span>`);
-    setTimeout(() => showPanel(3), 500);
-  });
-});
-
-document.querySelectorAll('.loc-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.loc-btn').forEach(b => b.classList.remove('selected'));
-    btn.classList.add('selected');
-    chosenLoc = btn.dataset.loc;
-    wave();
-    document.getElementById('confirmLocBtn').style.display = 'inline-block';
-    setBubble(`${chosenLoc} it is 📍<span class='sub'>ready to make it official?</span>`);
-  });
-});
-
-document.getElementById('confirmLocBtn').addEventListener('click', () => {
-  wave();
-  setBubble("almost done &mdash; what time works for you?");
-  showPanel(4);
-});
-
-let chosenTime = null;
-
-function formatCustomTime(value){
-  // value is "HH:MM" 24hr
-  const [h, m] = value.split(':').map(Number);
-  const period = h >= 12 ? 'PM' : 'AM';
-  const hour12 = ((h + 11) % 12) + 1;
-  return `${hour12}:${m.toString().padStart(2,'0')} ${period}`;
-}
-
-document.querySelectorAll('.time-chip').forEach(chip => {
-  chip.addEventListener('click', () => {
-    document.querySelectorAll('.time-chip').forEach(c => c.classList.remove('selected'));
-    chip.classList.add('selected');
-    document.getElementById('customTime').value = '';
-    chosenTime = chip.dataset.time;
-    wave();
-    document.getElementById('confirmTimeBtn').style.display = 'inline-block';
-    setBubble(`${chosenTime} it is 🕒<span class='sub'>ready to make it official?</span>`);
-  });
-});
-
-document.getElementById('customTime').addEventListener('input', (e) => {
-  if(!e.target.value) return;
-  document.querySelectorAll('.time-chip').forEach(c => c.classList.remove('selected'));
-  chosenTime = formatCustomTime(e.target.value);
-  wave();
-  document.getElementById('confirmTimeBtn').style.display = 'inline-block';
-  setBubble(`${chosenTime} it is 🕒<span class='sub'>ready to make it official?</span>`);
-});
-
-document.getElementById('confirmTimeBtn').addEventListener('click', () => {
-  const t = typeLabels[chosenType];
-  document.getElementById('summaryBox').innerHTML =
-    `<b>${t.emoji} ${t.name}</b><br>` +
-    `📍 ${chosenLoc}<br>` +
-    `🕒 ${chosenTime}<br>` +
-    `👤 just us two &mdash; my favorite CSR & her sleeping beauty energy`;
-  setBubble("perfect. it's a date, Riri 💌");
-  wave();
-  showPanel(5);
-  document.getElementById('igRow').style.display = 'flex';
-});
-
-document.getElementById('celebrateBtn').addEventListener('click', () => {
-  wave();
-  setBubble("counting down already 🐾💗");
-  launchConfetti();
-  setTimeout(() => {
-    setBubble("one last thing &mdash; tap below to view it, then screenshot it and send it to me on Instagram, Riri! 📸💌");
-  }, 1800);
-});
-
-document.getElementById('restartLink').addEventListener('click', () => {
-  chosenType = null; chosenLoc = null; chosenTime = null;
-  catWrap.classList.remove('asking');
-  document.getElementById('startBtn').disabled = false;
-  document.getElementById('yesBtn').disabled = false;
-  document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
-  document.querySelectorAll('.loc-btn').forEach(b => b.classList.remove('selected'));
-  document.querySelectorAll('.time-chip').forEach(c => c.classList.remove('selected'));
-  document.getElementById('customTime').value = '';
-  document.getElementById('confirmLocBtn').style.display = 'none';
-  document.getElementById('confirmTimeBtn').style.display = 'none';
-  document.getElementById('igRow').style.display = 'none';
-  hint.textContent = "tap the cat";
-  setBubble("hi Riri 🐈 &mdash; my favorite CSR is here.<span class='sub'>(tap me when you're ready)</span>");
-  showPanel(0);
-});
-
-// ---- Instagram screenshot handoff ----
-// In-app browsers (Instagram, Messenger, etc.) commonly block file downloads,
-// so instead of downloading an image, we show a clean full-screen card she can screenshot.
-
-document.getElementById('viewScheduleBtn').addEventListener('click', () => {
-  const t = typeLabels[chosenType];
-  document.getElementById('exportRow').innerHTML =
-    `${t.emoji} <b>${t.name}</b><br>` +
-    `📍 <b>${chosenLoc}</b><br>` +
-    `🕒 <b>${chosenTime}</b><br>` +
-    `👤 just us two`;
-
-  wave();
-  showPanel(6);
-  setBubble("screenshot this page and send it to me on Instagram, Riri! 📸💌");
-});
-
-document.getElementById('backFromScreenshotLink').addEventListener('click', () => {
-  showPanel(5);
-  setBubble("all set whenever you're ready 💌");
-});
-
-// ---- idle autonomous cat movement ----
-const idleClasses = ['idle-look-left','idle-look-right','idle-stretch','idle-tilt'];
-let idleTimer = null;
-
-function scheduleIdle(){
-  const delay = 3000 + Math.random()*3500;
-  idleTimer = setTimeout(() => {
-    if(!catWrap.classList.contains('wave')){
-      const cls = idleClasses[Math.floor(Math.random()*idleClasses.length)];
-      catWrap.classList.add(cls);
-      setTimeout(() => catWrap.classList.remove(cls), 1900);
-    }
-    scheduleIdle();
-  }, delay);
-}
-scheduleIdle();
-
-// ambient paw prints
-const pawBg = document.getElementById('pawBg');
-for(let i=0;i<10;i++){
-  const s = document.createElement('span');
-  s.textContent = '🐾';
-  s.style.left = Math.random()*100+'%';
-  s.style.animationDelay = (Math.random()*14)+'s';
-  s.style.animationDuration = (10+Math.random()*8)+'s';
-  s.style.fontSize = (14+Math.random()*14)+'px';
-  pawBg.appendChild(s);
-}
-
-function launchConfetti(){
-  const pieces = ['🎀','💗','🐾','✨','🌸'];
-  for(let i=0;i<36;i++){
-    const el = document.createElement('div');
-    el.className = 'confetti-piece';
-    el.textContent = pieces[Math.floor(Math.random()*pieces.length)];
-    el.style.left = Math.random()*100+'vw';
-    el.style.animationDuration = (2.2+Math.random()*1.8)+'s';
-    el.style.fontSize = (14+Math.random()*14)+'px';
-    document.body.appendChild(el);
-    setTimeout(()=> el.remove(), 4200);
   }
-}
+
+  function hearts(x, y) {
+    for (let n = 0; n < 5; n++) {
+      const el = document.createElement("span");
+      el.className = "float";
+      el.textContent = "💗";
+      el.style.left = x + (Math.random() * 80 - 40) + "px";
+      el.style.top = y + (Math.random() * 30 - 15) + "px";
+      el.style.setProperty("--dx", (Math.random() * 60 - 30) + "px");
+      el.style.animationDelay = n * 0.08 + "s";
+      document.body.appendChild(el);
+      el.addEventListener("animationend", () => el.remove());
+    }
+  }
+
+  // ---- music (browsers only allow sound after a tap, so it starts on the first tap) ----
+  const song = document.getElementById("song");
+  const musicBtn = document.getElementById("musicBtn");
+
+  function setMusicUI() {
+    const playing = !song.paused;
+    musicBtn.textContent = playing ? "🔊" : "🔇";
+    musicBtn.setAttribute("aria-label", playing ? "Mute music" : "Play music");
+  }
+  function startMusic() {
+    song.volume = 0.7;
+    song.play().then(setMusicUI).catch(() => {});
+  }
+  musicBtn.addEventListener("click", () => {
+    if (song.paused) startMusic(); else { song.pause(); setMusicUI(); }
+  });
+  // no song.mp3 next to the page? hide the button
+  song.addEventListener("error", () => { musicBtn.hidden = true; });
+  if (song.networkState === 3) musicBtn.hidden = true;
+
+  kitty.addEventListener("click", (e) => {
+    kitty.classList.remove("hop");
+    void kitty.offsetWidth;
+    kitty.classList.add("hop");
+
+    const r = kitty.getBoundingClientRect();
+    hearts(r.left + r.width / 2, r.top + r.height * 0.3);
+
+    if (!given) {
+      given = true;
+      startMusic();
+      document.body.classList.add("given");
+      rain(["🌸", "🌷", "🌼"], 26);
+      i = 1;
+    } else {
+      i = (i + 1) % messages.length;
+      rain(["🌸", "💗"], 8);
+    }
+    say(messages[i]);
+  });
+
+  kitty.addEventListener("animationend", () => kitty.classList.remove("hop"));
+  say(messages[0]);
 </script>
 </body>
 </html>
